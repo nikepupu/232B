@@ -12,6 +12,6 @@ REQUIRED
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -g")
 
-add_executable(  res main.cpp detector.cpp saot_inference_Config.cpp)
+add_executable(  res main.cpp detector.cpp saot_inference_Config.cpp filter.cpp misc.cpp)
 
 target_link_libraries(res ${OpenCV_LIBS} ${CMAKE_THREAD_LIBS_INIT} ${Boost_LIBRARIES})
