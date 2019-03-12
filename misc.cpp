@@ -134,19 +134,19 @@ void NonMaximumSuppression(int img, int mo, int mx, int my, const SAOTInferenceC
 
 void Sigmoid(const SAOTInferenceConfig& config, MatCell_2<cv::Mat> &map_sum1_find)
 {
-	// double satur = config.saturation;
-	// for (int i=0; i<map_sum1_find.shape()[0]; i++)
-	// 	for (int j=0; j<map_sum1_find.shape()[1]; j++)
-	// 	{
-	// 		int nRow = map_sum1_find[i][j].rows;
-	// 		int nCol = map_sum1_find[i][j].cols;
-	// 		for (int r=0; r<nRow; ++r)
-	// 			for (int c=0; c<nCol; ++c)
-	// 			{
-	// 				map_sum1_find[i][j].at<double>(r,c) = 
-	// 				satur*(2./(1.+exp(-2.*map_sum1_find[i][j].at<double>(r,c)/satur))-1.);
-	// 			}
-	// 	}	
+	double satur = config.saturation;
+	for (int i=0; i<map_sum1_find.shape()[0]; i++)
+		for (int j=0; j<map_sum1_find.shape()[1]; j++)
+		{
+			int nRow = map_sum1_find[i][j].rows;
+			int nCol = map_sum1_find[i][j].cols;
+			for (int r=0; r<nRow; ++r)
+				for (int c=0; c<nCol; ++c)
+				{
+					map_sum1_find[i][j].at<double>(r,c) = 
+					satur*(2./(1.+exp(-2.*map_sum1_find[i][j].at<double>(r,c)/satur))-1.);
+				}
+		}	
 
 }
 
@@ -257,74 +257,71 @@ void LocalNormalize(const cv::Size &img_size, int num_filters,
 
 void CropInstance(const SAOTInferenceConfig& config, MatCell_1<cv::Mat> &src, MatCell_1<cv::Mat> &dest, 
 		double rshift, double cshift, double rotation, double scaling, double reflection, 
-		const double* transformedRow, const double* transformedCol, int destHeight, int destWidth)
+		const double* transformedRow, const double* transformedCol, int nOri, int nScale, int destHeight, int destWidth)
 {
 
-	// int nOri = config.num_orient;
-	// int nScale = config.num_scale;
+	int nPixel;
+	nPixel = destWidth * destHeight;
 
-	// int nPixel;
-	// nPixel = destWidth * destHeight;
+	int i, s, o, destR, destC; /* destination image: scale, orientation */
+	int srcS, srcO, r, c; /* src image: scale, orientation */
+	int indSrc, indDest;
+	int srcHeight = src[0].rows;
+	int srcWidth = src[0].cols;
 
-	// int i, s, o, destR, destC; /* destination image: scale, orientation */
-	// int srcS, srcO, r, c; /* src image: scale, orientation */
-	// int indSrc, indDest;
-	// int srcHeight = src[0].rows;
-	// int srcWidth = src[0].cols;
+	/* The following two FOR loops go over destimation images/feature maps
+	 * at different scales and orientations.
+	 */	
+	for( s = 0; s < nScale; ++s )
+	{
+		srcS = s + scaling;
+		if( srcS < 0 || srcS >= nScale )
+		{
+			continue;
+		}
 
-	// /* The following two FOR loops go over destimation images/feature maps
-	//  * at different scales and orientations.
-	//  */	
-	// for( s = 0; s < nScale; ++s )
-	// {
-	// 	srcS = s + scaling;
-	// 	if( srcS < 0 || srcS >= nScale )
-	// 	{
-	// 		continue;
-	// 	}
-
-	// 	for( o = 0; o < nOri; ++o )
-	// 	{
-	// 		srcO = o + rotation;
-	// 		while( srcO < 0 )
-	// 		{
-	// 			srcO += nOri;
-	// 		}
-	// 		while( srcO >= nOri )
-	// 		{
-	// 			srcO -= nOri;
-	// 		}
-	// 		if( reflection < 0 ) // deal with reflection
-	// 		{
-	// 			 srcO = nOri - srcO;
-	// 		}
-	// 		while( srcO < 0 )
-	// 		{
-	// 			srcO += nOri;
-	// 		}
-	// 		while( srcO >= nOri )
-	// 		{
-	// 			srcO -= nOri;
-	// 		}
-	// 		indDest = s*nOri + o;
-	// 		indSrc = srcS*nOri + srcO;
-	// 		for( i = 0; i < nPixel; ++i ) /* location */
-	// 		{
-	// 			destR = (int)transformedRow[i];
-	// 			destC = (int)transformedCol[i];
-	// 			r = rshift + destR;
-	// 			c = cshift + destC;
-	// 			if( r < 0 || r >= srcHeight || c < 0 || c >= srcWidth )
-	// 			{
-	// 				/* do nothing */
-	// 			}
-	// 			else
-	// 			{
-	// 				dest[indDest].at<double>(destR, destC) = src[indSrc].at<double>(r,c);
-	// 			}
-	// 		}
-	// 	}
-	// }
+		for( o = 0; o < nOri; ++o )
+		{
+			srcO = o + rotation;
+			while( srcO < 0 )
+			{
+				srcO += nOri;
+			}
+			while( srcO >= nOri )
+			{
+				srcO -= nOri;
+			}
+			if( reflection < 0 ) // deal with reflection
+			{
+				 srcO = nOri - srcO;
+			}
+			while( srcO < 0 )
+			{
+				srcO += nOri;
+			}
+			while( srcO >= nOri )
+			{
+				srcO -= nOri;
+			}
+			indDest = s*nOri + o;
+			indSrc = srcS*nOri + srcO;
+			for( i = 0; i < nPixel; ++i ) /* location */
+			{
+				destR = (int)transformedRow[i];
+				destC = (int)transformedCol[i];
+				r = rshift + destR;
+				c = cshift + destC;
+				if( r < 0 || r >= srcHeight || c < 0 || c >= srcWidth )
+				{
+					/* do nothing */
+				}
+				else
+				{
+					dest[indDest].at<double>(destR, destC) = src[indSrc].at<double>(r,c);
+				}
+			}
+		}
+	}
 
 }
 

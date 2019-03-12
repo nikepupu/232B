@@ -3,63 +3,76 @@
 
 #include <string>
 #include <vector>
+#include <opencv2/core/core.hpp>
+#include <opencv2/opencv.hpp>
+#include "util/meta_type.hpp"
 
 namespace AOG_LIB {
 namespace SAOT{
 
 struct SAOTInferenceConfig {
 //from the first file
-int subsampleS2;
-int numOrient;
-double ***allFilter;
-double ***allSymbol;
-int* partRotationRange;
-double locationPerturbFraction;
-int numPartRotate;
+  std::string category;
+  std::string img_dir;
+  std::string img_ext;
+  std::string output_dir;
+  std::string bkg_img_dir;
+  double resize_factor;
+  int num_resolution;
+  int template_size[2], part_size[2];
+  std::vector<int> part_rotation_range;
+  int num_part_rotation;
+  int max_part_relative_rotation;
+  double min_rotation_dif;
+  std::vector<int> rotation_range;
+  int num_rotate;
+  int num_element;
+  double location_perturb_fraction;
+  int location_shift_limit;
+  int subsample_S2, subsample_M2, subsample_S3 = 1;
+  int part_margin[2];
+  double epsilon;
+  int subsample;
+  int num_image;
+  int num_orient;
+  int num_scale;
+  int orient_shift_limit;
+  std::vector<std::string> image_name;
+  int local_half_x, local_half_y;
+  int half_filter_size;
+  double threshold_factor;
+  double saturation;
+  int numStoredPoint; /* number of stored points of lambda in exponential model */   
+  int num_iteration;
+  int numCandPart;
 
-int maxPartRelativeRotation;
-int resolutionShiftLimit;
-int numCandPart;
-int* PartLocX;
-int* PartLocY;
 
-int sizeTemplatex;
-int sizeTemplatey;
-int partSizeX;
-int partSizeY;
-double minRotationDif;
-int *rotationRange;
-int numResolution;
-int resizeFactor;
-int numElement;
+  int partSizeX;
+  int partSizeY;
+  std::vector<int> PartLocX,PartLocY;
 
-int localHalfx;
-int localHalfy;
-double thresholdFactor;
-int saturation;
-int locationShiftLimit;
-int orientShiftLimit;
 
 // the second file
-std::vector<std::vector<int> > allSelectedx;
-std::vector<std::vector<int> > allSelectedy;
-std::vector<std::vector<int> > allSelectedOrient;
-std::vector<std::vector<double> > selectedlambda;
-std::vector<std::vector<double> > selectedLogZ;
+MatCell_2<cv::Mat> allSelectedx;
+MatCell_2<cv::Mat> allSelectedy;
+MatCell_2<cv::Mat> allSelectedOrient;
+MatCell_1<cv::Mat> selectedlambda;
+MatCell_1<cv::Mat> selectedLogZ;
+MatCell_1<cv::Mat> allSymbol;
 
-std::vector<std::vector<int> > largerAllSelectedx;
-std::vector<std::vector<int> > largerAllSelectedy;
-std::vector<std::vector<int> > largerAllSelectedOrient;
-std::vector<std::vector<double> > largerSelectedlambda;
-std::vector<std::vector<double> > largerSelectedLogZ;
+MatCell_2<cv::Mat> largerAllSelectedx;
+MatCell_2<cv::Mat> largerAllSelectedy;
+MatCell_2<cv::Mat> largerAllSelectedOrient;
+MatCell_1<cv::Mat> largerSelectedlambda;
+MatCell_1<cv::Mat> largerSelectedLogZ;
 
 //thrid file
 int *PartOnOff;
-std::vector<std::vector<int> > allS3SelectedRow;
-std::vector<std::vector<int> > allS3SelectedCol;
-std::vector<std::vector<int> > allS3SelectedOri;
+cv::Mat allS3SelectedRow;
+cv::Mat allS3SelectedCol;
+cv::Mat allS3SelectedOri;
 
-std::vector<int> selectedPart;
+cv::Mat selectedPart;
 
 
 
