@@ -1,0 +1,52 @@
+%YAML:1.0
+---
+category: Egret
+
+# Resize the input images
+resize_factor: 1
+
+# Number of resolutions to search for in detetion stage
+num_resolution: 4
+
+# Object template size. Size x denotes height, Size y denotes width.
+template_size:
+  x: 144
+  y: 144
+
+# Exponential model
+epsilon: 0.1
+scale_filter: 0.7
+num_orient: 16
+saturation: 6
+bin_size: 0.2
+num_stored_point: 50
+
+# Manually label the iamge path to initialize the template
+# Original resolution is the one at which the imresize factor = 1
+original_resolution: 4
+
+# Morphable active basis model
+num_iteration: 30
+
+# Part rotation range: scale * [start, end]
+part_rotate:
+  start: -2
+  end: 2
+  scale: 2
+  max_relative_rotation: 2
+
+resolution_shift_limit: 1
+
+obj_rotate:
+  start: -1
+  end: 1
+  scale: 2
+
+num_element: 50
+location_perturb_fraction: 0.2
+location_shift_limit: 3
+orient_shift_limit: 1
+subsample_S2: 3
+subsample_M2: 1
+subsample: 1
+

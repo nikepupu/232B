@@ -1,3 +1,0 @@
-/media/nikepupu/10D6122F101EC956/232B/CMakeFiles/edit_cache.dir
-/media/nikepupu/10D6122F101EC956/232B/CMakeFiles/res.dir
-/media/nikepupu/10D6122F101EC956/232B/CMakeFiles/rebuild_cache.dir
