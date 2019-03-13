@@ -55,6 +55,7 @@ struct SAOTConfig {
   std::vector<int> part_loc_x;
   std::vector<int> part_loc_y;
 
+  // second file
   MatCell_2<cv::Mat> allSelectedx;
   MatCell_2<cv::Mat> allSelectedy;
   MatCell_2<cv::Mat> allSelectedOrient;

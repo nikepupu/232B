@@ -160,11 +160,11 @@ namespace SAOT{
 	std::string featurefile;
 	bool reLoadModel;
 	int  it;
-	bool doMorphBackS1map;
-	bool doCropBackImage;
-	bool showMatchedTemplate;
-	bool showPartBoundingBox;
-	bool showObjectBoundingBox;
+	bool doMorphBackS1map = true;
+	bool doCropBackImage = true;
+	bool showMatchedTemplate = true;
+	bool showPartBoundingBox = true;
+	bool showObjectBoundingBox = true;
 
 
 	int bestRotInd;
@@ -178,7 +178,10 @@ namespace SAOT{
 
 
 
-
+	int objRotation = 0;
+	int objResolution = 0;
+	int objLocation[2] = {0,0};
+	int objScore = 0;
 
 	int therex;
 	int therey;

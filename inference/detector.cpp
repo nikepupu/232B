@@ -268,10 +268,7 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 	        }
 
 	        count = 0;
-	        ///////////////////////////////////////////////////
-	        ////// need to modify this part
-	        ////// based on the data type Shu Wang defined
-	        ///////////////////////////////////////////////////
+
 
 	        std::vector<double> inRow= std::vector<double>(denseX.size() * denseY.size(), 0.0);
 	        std::vector<double> inCol= std::vector<double>(denseX.size() * denseY.size(), 0.0);
@@ -292,9 +289,7 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 
 	        std::vector<double> outRow, outCol;
 
-	        //////////////////////////////////////////////////////
-	        ////TemplateAffineTransform is not done
-	        ///////////////////////////////////////////////////
+
 	        std::vector<PartParam> in_comp, out_comp;
 	        for(int i = 0; i < inRow.size();i++)
 	        {
@@ -410,9 +405,6 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 	            for(int i = 0; i < configs.partSizeX;i++)
 	            	src.at<double>(1,i) = i+1;
 	            
-
-	            
-
 	           	cv::Mat xx;
 	           	cv::repeat( src,1,margin*2,xx);
 	            std::vector<double> yt;
@@ -493,6 +485,8 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 	                }
 
 	            }
+				cv::resize(matchedBoundingBox,matchedBoundingBox, 
+				cv::Size(imageSizeAtBestObjectResolution[0],imageSizeAtBestObjectResolution[1] )) ;
 	            // matchedBoundingBox = imresize(matchedBoundingBox,size(ImageMultiResolution{bestRes}),'nearest');
 			} //if(showPartBoundingBox)
 		}// if showMatchedTemplate

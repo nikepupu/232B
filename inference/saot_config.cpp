@@ -7,11 +7,80 @@
 #include <opencv2/core/core.hpp>
 #include "util/file_util.hpp"
 #include "util/mat_util.hpp"
-
+#include <fstream>
 
 namespace AOG_LIB {
 namespace SAOT {
 namespace po = boost::program_options;
+
+void LoadMatCell2(std::string filename, MatCell_2<cv::Mat> & var)
+{
+  std::ifstream ifs;
+  int sub_size1,sub_size2;
+  int sz1, sz2,total;
+
+  ifs.open(filename.c_str(),std::ifstream::in);
+  assert(ifs.is_open()==true);
+  ifs>>sz1 >> sz2;
+
+  var=CreateMatCell2Dim<cv::Mat>(sz1,sz2);
+  for(int i = 0; i < sz1; i++)
+    for(int j = 0; j < sz2; j++)
+    {
+      ifs >> sub_size1 >> sub_size2;
+      var[i][j].create(sub_size1, sub_size2, CV_64F);
+      for(int m = 0; m < sub_size1; m++)
+        for(int n = 0; n < sub_size2; n++)
+          ifs >> var[i][j].at<double>(m,n);
+    }
+
+  ifs.close();
+
+}
+
+void LoadMatCell1(std::string filename, MatCell_1<cv::Mat> & var)
+{
+  std::ifstream ifs;
+  int sub_size1,sub_size2;
+  int sz1, sz2,total;
+
+  ifs.open(filename.c_str(),std::ifstream::in);
+  assert(ifs.is_open()==true);
+  ifs>>sz1 >> sz2;
+
+  var=CreateMatCell1Dim<cv::Mat>(sz1);
+  for(int i = 0; i < sz1; i++)
+    {
+      ifs >> sub_size1 >> sub_size2;
+      var[i].create(sub_size1, sub_size2, CV_64F);
+      for(int m = 0; m < sub_size1; m++)
+        for(int n = 0; n < sub_size2; n++)
+          ifs >> var[i].at<double>(m,n);
+    }
+
+  ifs.close();
+
+}
+
+
+void LoadMat(std::string filename , cv::Mat & var)
+{
+  std::ifstream ifs;
+  int sub_size1,sub_size2;
+  int sz1, sz2,total;
+  ifs.open(filename.c_str(),std::ifstream::in);
+  assert(ifs.is_open()==true);
+  ifs>>sz1 >> sz2;
+  total = sz1*sz2;
+  assert(total >= 0);
+
+  var.create(sz1, sz2, CV_64F);
+  for(int i = 0; i < sz1; i++)
+    for(int j = 0; j < sz2; j++)
+        ifs >> var.at<double>(i,j);
+
+  ifs.close();
+}
 
 bool LoadConfigFile(const std::string &filename, SAOTConfig &config) {
   cv::FileStorage fs;
@@ -79,6 +148,56 @@ bool LoadConfigFile(const std::string &filename, SAOTConfig &config) {
   config.startx = 1; config.starty = 1;
   config.endx = config.startx + config.template_size[0] - 1;
   config.endy = config.starty + config.template_size[1] - 1;
+  /////////////////////////////////////////////////////////
+  // reading from the thrid mat file --- object model
+  std::ifstream ifs;
+  ifs.open("./PartOnOff.txt",std::ifstream::in);
+  assert(ifs.is_open()==true);
+  int sz1, sz2, total;
+  ifs>>sz1 >> sz2;
+  total = sz1*sz2;
+  assert(total >= 0);
+  config.PartOnOff = new int[total];
+  for(int i = 0; i < total; i++)
+    ifs >> config.PartOnOff[i];
+  ifs.close();
+
+  ///////////////////////////////////////////////////////
+  ///// Pay Attention
+  ///// this is hard coded to all one, since we want to
+  ///// detect all object parts. Turn some of them off 
+  ///// if we don't need some parts.
+  //////////////////////////////////////////////////////
+  config.selectedPart.create(total,1, CV_64F);
+  for(int i = 0; i < total; i++ )
+    config.selectedPart.at<double>(i,0)  = i+1;
+
+  
+  LoadMat("./allS3SelectedRow.txt", config.allS3SelectedRow);
+  LoadMat("./allS3SelectedCol.txt", config.allS3SelectedCol);
+  LoadMat("./allS3SelectedOri.txt", config.allS3SelectedOri);
+
+  ////////////////////////////////////////////
+  ////read from the second mat file part model
+  ////////////////////////////////////////////
+  /// the following are in MatCell_2<cv::Mat>  format
+
+  LoadMatCell2("./allSelectedx.txt", config.allSelectedx);
+  LoadMatCell2("./allSelectedy.txt", config.allSelectedy);
+  LoadMatCell2("./allSelectedOrient.txt", config.allSelectedOrient);
+  LoadMatCell1("./selectedlambda.txt", config.selectedlambda);
+  LoadMatCell1("./selectedLogZ.txt", config.selectedLogZ);
+  LoadMatCell1("./allSymbol.txt", config.allSymbol);
+
+  LoadMatCell2("./largerAllSelectedx.txt", config.largerAllSelectedx);
+  LoadMatCell2("./largerAllSelectedy.txt", config.largerAllSelectedy);
+  LoadMatCell2("./largerAllSelectedOrient.txt", config.largerAllSelectedOrient);
+  LoadMatCell1("./largerSelectedlambda.txt", config.largerSelectedlambda);
+  LoadMatCell1("./largerSelectedLogZ.txt", config.largerSelectedLogZ);
+
+
+
+
 
   return true;
 }
