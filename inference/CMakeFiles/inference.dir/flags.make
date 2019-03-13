@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_FLAGS = -Wall -g    -std=gnu++11
 
-CXX_DEFINES = 
+CXX_DEFINES = -DBOOST_LOG_DYN_LINK
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/usr/include/opencv 
 

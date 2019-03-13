@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /media/nikepupu/10D6122F101EC956/232B && $(CMAKE_COMMAND) -E cmake_progress_start /media/nikepupu/10D6122F101EC956/232B/CMakeFiles /media/nikepupu/10D6122F101EC956/232B/AOG_Base/CMakeFiles/progress.marks
-	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 AOG_Base/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /media/nikepupu/10D6122F101EC956/232B/CMakeFiles /media/nikepupu/10D6122F101EC956/232B/CMakeFiles/progress.marks
+	$(MAKE) -f CMakeFiles/Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start /media/nikepupu/10D6122F101EC956/232B/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 AOG_Base/clean
+	$(MAKE) -f CMakeFiles/Makefile2 clean
 .PHONY : clean
 
 # The main clean target
@@ -97,60 +97,44 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 AOG_Base/preinstall
+	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 AOG_Base/preinstall
+	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /media/nikepupu/10D6122F101EC956/232B && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-# Convenience name for target.
-AOG_Base/CMakeFiles/graph.dir/rule:
-	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 AOG_Base/CMakeFiles/graph.dir/rule
-.PHONY : AOG_Base/CMakeFiles/graph.dir/rule
+#=============================================================================
+# Target rules for targets named graph
 
-# Convenience name for target.
-graph: AOG_Base/CMakeFiles/graph.dir/rule
-
+# Build rule for target.
+graph: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 graph
 .PHONY : graph
 
 # fast build rule for target.
 graph/fast:
-	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f AOG_Base/CMakeFiles/graph.dir/build.make AOG_Base/CMakeFiles/graph.dir/build
+	$(MAKE) -f AOG_Base/CMakeFiles/graph.dir/build.make AOG_Base/CMakeFiles/graph.dir/build
 .PHONY : graph/fast
 
-grammar_example.o: grammar_example.cpp.o
+#=============================================================================
+# Target rules for targets named inference
 
-.PHONY : grammar_example.o
+# Build rule for target.
+inference: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 inference
+.PHONY : inference
 
-# target to build an object file
-grammar_example.cpp.o:
-	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f AOG_Base/CMakeFiles/graph.dir/build.make AOG_Base/CMakeFiles/graph.dir/grammar_example.cpp.o
-.PHONY : grammar_example.cpp.o
-
-grammar_example.i: grammar_example.cpp.i
-
-.PHONY : grammar_example.i
-
-# target to preprocess a source file
-grammar_example.cpp.i:
-	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f AOG_Base/CMakeFiles/graph.dir/build.make AOG_Base/CMakeFiles/graph.dir/grammar_example.cpp.i
-.PHONY : grammar_example.cpp.i
-
-grammar_example.s: grammar_example.cpp.s
-
-.PHONY : grammar_example.s
-
-# target to generate assembly for a file
-grammar_example.cpp.s:
-	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f AOG_Base/CMakeFiles/graph.dir/build.make AOG_Base/CMakeFiles/graph.dir/grammar_example.cpp.s
-.PHONY : grammar_example.cpp.s
+# fast build rule for target.
+inference/fast:
+	$(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/build
+.PHONY : inference/fast
 
 # Help Target
 help:
@@ -159,11 +143,9 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... graph"
 	@echo "... edit_cache"
-	@echo "... grammar_example.o"
-	@echo "... grammar_example.i"
-	@echo "... grammar_example.s"
+	@echo "... graph"
+	@echo "... inference"
 .PHONY : help
 
 
@@ -175,6 +157,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /media/nikepupu/10D6122F101EC956/232B && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

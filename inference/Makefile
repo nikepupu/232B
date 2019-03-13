@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/nikepupu/10D6122F101EC956/232B/CMakeFiles /media/nikepupu/10D6122F101EC956/232B/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
+	cd /media/nikepupu/10D6122F101EC956/232B && $(CMAKE_COMMAND) -E cmake_progress_start /media/nikepupu/10D6122F101EC956/232B/CMakeFiles /media/nikepupu/10D6122F101EC956/232B/inference/CMakeFiles/progress.marks
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 inference/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /media/nikepupu/10D6122F101EC956/232B/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 inference/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,30 +97,32 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 inference/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 inference/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /media/nikepupu/10D6122F101EC956/232B && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named inference
+# Convenience name for target.
+inference/CMakeFiles/inference.dir/rule:
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f CMakeFiles/Makefile2 inference/CMakeFiles/inference.dir/rule
+.PHONY : inference/CMakeFiles/inference.dir/rule
 
-# Build rule for target.
-inference: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 inference
+# Convenience name for target.
+inference: inference/CMakeFiles/inference.dir/rule
+
 .PHONY : inference
 
 # fast build rule for target.
 inference/fast:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/build
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/build
 .PHONY : inference/fast
 
 detector.o: detector.cpp.o
@@ -129,7 +131,7 @@ detector.o: detector.cpp.o
 
 # target to build an object file
 detector.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/detector.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/detector.cpp.o
 .PHONY : detector.cpp.o
 
 detector.i: detector.cpp.i
@@ -138,7 +140,7 @@ detector.i: detector.cpp.i
 
 # target to preprocess a source file
 detector.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/detector.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/detector.cpp.i
 .PHONY : detector.cpp.i
 
 detector.s: detector.cpp.s
@@ -147,7 +149,7 @@ detector.s: detector.cpp.s
 
 # target to generate assembly for a file
 detector.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/detector.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/detector.cpp.s
 .PHONY : detector.cpp.s
 
 exponential_model.o: exponential_model.cpp.o
@@ -156,7 +158,7 @@ exponential_model.o: exponential_model.cpp.o
 
 # target to build an object file
 exponential_model.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/exponential_model.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/exponential_model.cpp.o
 .PHONY : exponential_model.cpp.o
 
 exponential_model.i: exponential_model.cpp.i
@@ -165,7 +167,7 @@ exponential_model.i: exponential_model.cpp.i
 
 # target to preprocess a source file
 exponential_model.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/exponential_model.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/exponential_model.cpp.i
 .PHONY : exponential_model.cpp.i
 
 exponential_model.s: exponential_model.cpp.s
@@ -174,7 +176,7 @@ exponential_model.s: exponential_model.cpp.s
 
 # target to generate assembly for a file
 exponential_model.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/exponential_model.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/exponential_model.cpp.s
 .PHONY : exponential_model.cpp.s
 
 filter.o: filter.cpp.o
@@ -183,7 +185,7 @@ filter.o: filter.cpp.o
 
 # target to build an object file
 filter.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/filter.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/filter.cpp.o
 .PHONY : filter.cpp.o
 
 filter.i: filter.cpp.i
@@ -192,7 +194,7 @@ filter.i: filter.cpp.i
 
 # target to preprocess a source file
 filter.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/filter.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/filter.cpp.i
 .PHONY : filter.cpp.i
 
 filter.s: filter.cpp.s
@@ -201,7 +203,7 @@ filter.s: filter.cpp.s
 
 # target to generate assembly for a file
 filter.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/filter.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/filter.cpp.s
 .PHONY : filter.cpp.s
 
 layers/layer1.o: layers/layer1.cpp.o
@@ -210,7 +212,7 @@ layers/layer1.o: layers/layer1.cpp.o
 
 # target to build an object file
 layers/layer1.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/layers/layer1.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/layers/layer1.cpp.o
 .PHONY : layers/layer1.cpp.o
 
 layers/layer1.i: layers/layer1.cpp.i
@@ -219,7 +221,7 @@ layers/layer1.i: layers/layer1.cpp.i
 
 # target to preprocess a source file
 layers/layer1.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/layers/layer1.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/layers/layer1.cpp.i
 .PHONY : layers/layer1.cpp.i
 
 layers/layer1.s: layers/layer1.cpp.s
@@ -228,7 +230,7 @@ layers/layer1.s: layers/layer1.cpp.s
 
 # target to generate assembly for a file
 layers/layer1.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/layers/layer1.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/layers/layer1.cpp.s
 .PHONY : layers/layer1.cpp.s
 
 layers/layer2.o: layers/layer2.cpp.o
@@ -237,7 +239,7 @@ layers/layer2.o: layers/layer2.cpp.o
 
 # target to build an object file
 layers/layer2.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/layers/layer2.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/layers/layer2.cpp.o
 .PHONY : layers/layer2.cpp.o
 
 layers/layer2.i: layers/layer2.cpp.i
@@ -246,7 +248,7 @@ layers/layer2.i: layers/layer2.cpp.i
 
 # target to preprocess a source file
 layers/layer2.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/layers/layer2.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/layers/layer2.cpp.i
 .PHONY : layers/layer2.cpp.i
 
 layers/layer2.s: layers/layer2.cpp.s
@@ -255,7 +257,7 @@ layers/layer2.s: layers/layer2.cpp.s
 
 # target to generate assembly for a file
 layers/layer2.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/layers/layer2.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/layers/layer2.cpp.s
 .PHONY : layers/layer2.cpp.s
 
 layers/layer3.o: layers/layer3.cpp.o
@@ -264,7 +266,7 @@ layers/layer3.o: layers/layer3.cpp.o
 
 # target to build an object file
 layers/layer3.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/layers/layer3.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/layers/layer3.cpp.o
 .PHONY : layers/layer3.cpp.o
 
 layers/layer3.i: layers/layer3.cpp.i
@@ -273,7 +275,7 @@ layers/layer3.i: layers/layer3.cpp.i
 
 # target to preprocess a source file
 layers/layer3.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/layers/layer3.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/layers/layer3.cpp.i
 .PHONY : layers/layer3.cpp.i
 
 layers/layer3.s: layers/layer3.cpp.s
@@ -282,7 +284,7 @@ layers/layer3.s: layers/layer3.cpp.s
 
 # target to generate assembly for a file
 layers/layer3.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/layers/layer3.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/layers/layer3.cpp.s
 .PHONY : layers/layer3.cpp.s
 
 main.o: main.cpp.o
@@ -291,7 +293,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/main.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -300,7 +302,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/main.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -309,7 +311,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/main.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 misc.o: misc.cpp.o
@@ -318,7 +320,7 @@ misc.o: misc.cpp.o
 
 # target to build an object file
 misc.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/misc.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/misc.cpp.o
 .PHONY : misc.cpp.o
 
 misc.i: misc.cpp.i
@@ -327,7 +329,7 @@ misc.i: misc.cpp.i
 
 # target to preprocess a source file
 misc.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/misc.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/misc.cpp.i
 .PHONY : misc.cpp.i
 
 misc.s: misc.cpp.s
@@ -336,7 +338,7 @@ misc.s: misc.cpp.s
 
 # target to generate assembly for a file
 misc.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/misc.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/misc.cpp.s
 .PHONY : misc.cpp.s
 
 saot_config.o: saot_config.cpp.o
@@ -345,7 +347,7 @@ saot_config.o: saot_config.cpp.o
 
 # target to build an object file
 saot_config.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/saot_config.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/saot_config.cpp.o
 .PHONY : saot_config.cpp.o
 
 saot_config.i: saot_config.cpp.i
@@ -354,7 +356,7 @@ saot_config.i: saot_config.cpp.i
 
 # target to preprocess a source file
 saot_config.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/saot_config.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/saot_config.cpp.i
 .PHONY : saot_config.cpp.i
 
 saot_config.s: saot_config.cpp.s
@@ -363,7 +365,7 @@ saot_config.s: saot_config.cpp.s
 
 # target to generate assembly for a file
 saot_config.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/saot_config.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/saot_config.cpp.s
 .PHONY : saot_config.cpp.s
 
 template.o: template.cpp.o
@@ -372,7 +374,7 @@ template.o: template.cpp.o
 
 # target to build an object file
 template.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/template.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/template.cpp.o
 .PHONY : template.cpp.o
 
 template.i: template.cpp.i
@@ -381,7 +383,7 @@ template.i: template.cpp.i
 
 # target to preprocess a source file
 template.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/template.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/template.cpp.i
 .PHONY : template.cpp.i
 
 template.s: template.cpp.s
@@ -390,7 +392,7 @@ template.s: template.cpp.s
 
 # target to generate assembly for a file
 template.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/template.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/template.cpp.s
 .PHONY : template.cpp.s
 
 util/file_util.o: util/file_util.cpp.o
@@ -399,7 +401,7 @@ util/file_util.o: util/file_util.cpp.o
 
 # target to build an object file
 util/file_util.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/util/file_util.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/util/file_util.cpp.o
 .PHONY : util/file_util.cpp.o
 
 util/file_util.i: util/file_util.cpp.i
@@ -408,7 +410,7 @@ util/file_util.i: util/file_util.cpp.i
 
 # target to preprocess a source file
 util/file_util.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/util/file_util.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/util/file_util.cpp.i
 .PHONY : util/file_util.cpp.i
 
 util/file_util.s: util/file_util.cpp.s
@@ -417,7 +419,7 @@ util/file_util.s: util/file_util.cpp.s
 
 # target to generate assembly for a file
 util/file_util.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/util/file_util.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/util/file_util.cpp.s
 .PHONY : util/file_util.cpp.s
 
 util/mat_util.o: util/mat_util.cpp.o
@@ -426,7 +428,7 @@ util/mat_util.o: util/mat_util.cpp.o
 
 # target to build an object file
 util/mat_util.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/util/mat_util.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/util/mat_util.cpp.o
 .PHONY : util/mat_util.cpp.o
 
 util/mat_util.i: util/mat_util.cpp.i
@@ -435,7 +437,7 @@ util/mat_util.i: util/mat_util.cpp.i
 
 # target to preprocess a source file
 util/mat_util.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/util/mat_util.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/util/mat_util.cpp.i
 .PHONY : util/mat_util.cpp.i
 
 util/mat_util.s: util/mat_util.cpp.s
@@ -444,7 +446,7 @@ util/mat_util.s: util/mat_util.cpp.s
 
 # target to generate assembly for a file
 util/mat_util.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/util/mat_util.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/util/mat_util.cpp.s
 .PHONY : util/mat_util.cpp.s
 
 util/vis_util.o: util/vis_util.cpp.o
@@ -453,7 +455,7 @@ util/vis_util.o: util/vis_util.cpp.o
 
 # target to build an object file
 util/vis_util.cpp.o:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/util/vis_util.cpp.o
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/util/vis_util.cpp.o
 .PHONY : util/vis_util.cpp.o
 
 util/vis_util.i: util/vis_util.cpp.i
@@ -462,7 +464,7 @@ util/vis_util.i: util/vis_util.cpp.i
 
 # target to preprocess a source file
 util/vis_util.cpp.i:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/util/vis_util.cpp.i
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/util/vis_util.cpp.i
 .PHONY : util/vis_util.cpp.i
 
 util/vis_util.s: util/vis_util.cpp.s
@@ -471,7 +473,7 @@ util/vis_util.s: util/vis_util.cpp.s
 
 # target to generate assembly for a file
 util/vis_util.cpp.s:
-	$(MAKE) -f CMakeFiles/inference.dir/build.make CMakeFiles/inference.dir/util/vis_util.cpp.s
+	cd /media/nikepupu/10D6122F101EC956/232B && $(MAKE) -f inference/CMakeFiles/inference.dir/build.make inference/CMakeFiles/inference.dir/util/vis_util.cpp.s
 .PHONY : util/vis_util.cpp.s
 
 # Help Target
@@ -533,6 +535,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /media/nikepupu/10D6122F101EC956/232B && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,4 +1,4 @@
-# Install script for directory: /media/nikepupu/10D6122F101EC956/232B/AOG_Base
+# Install script for directory: /media/nikepupu/10D6122F101EC956/232B/inference
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

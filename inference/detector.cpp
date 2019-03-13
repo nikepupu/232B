@@ -28,15 +28,15 @@ SAOT_Inference::SAOT_Inference()
 	showMatchedTemplate = true;
 	showPartBoundingBox = true;
 	showObjectBoundingBox = true;
-
-	featurefile   = featureFolder+"/"+imageName+".mat";
-	morphedPatch = ( cv::Mat_<double>(config.template_size[0], config.template_size[1]) );
+	
+	
 	LoadConfig();
+	morphedPatch = ( cv::Mat_<double>(config.template_size[0], config.template_size[1]) );
 }
 
 void SAOT_Inference::LoadConfig()
 {
-	
+	LoadConfigFile( "./inference/config.yml",config);
 }
 
 template <class type>

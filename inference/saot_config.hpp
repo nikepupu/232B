@@ -62,6 +62,7 @@ struct SAOTConfig {
   MatCell_1<cv::Mat> selectedlambda;
   MatCell_1<cv::Mat> selectedLogZ;
   MatCell_1<cv::Mat> allSymbol;
+  MatCell_1<cv::Mat> allFilter;
 
   MatCell_2<cv::Mat> largerAllSelectedx;
   MatCell_2<cv::Mat> largerAllSelectedy;
