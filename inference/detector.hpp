@@ -177,7 +177,7 @@ namespace SAOT{
 	MatCell_2<cv::Mat> map_sum1_find;
 	MatCell_1<cv::Mat> SUM1map;
 
-	MatCell_2<cv::Mat> ImageMultiResolution;
+	MatCell_1<cv::Mat> ImageMultiResolution;
 
 
 
@@ -193,10 +193,12 @@ namespace SAOT{
 	std::vector<double> gaborResponses;
 	std::vector<double> partScores;
 
-	MatCell_1<cv::Mat> M1RowShift;
-	MatCell_1<cv::Mat> M1ColShift;
-	MatCell_1<cv::Mat> M1OriShifted;
+	cv::Mat M1RowShift;
+	cv::Mat M1ColShift;
+	cv::Mat M1OriShifted;
 	MatCell_1<cv::Mat> morphedSUM1map;
+
+	MatCell_2<cv::Mat> MAX1map;
 
 
 	MatCell_2<cv::Mat> M1Trace;

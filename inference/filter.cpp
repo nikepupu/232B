@@ -119,9 +119,10 @@ void ApplyFilterfft(const SAOTConfig config, const MatCell_1<cv::Mat> &images,
     for (int j = 0; j < num_filters; j++) {
       cv::Mat out;
       cv::copyMakeBorder(filters[j], out, h, h, h, h, cv::BORDER_CONSTANT, 0);
+      out.convertTo(out, CV_32F);
       cv::dft(out, out, cv::DFT_INVERSE);
       cv::Mat filtered = out.rowRange(h, h + sx).colRange(h, h + sy);
-      //  Compute local energy
+      //Compute local energy
       cv::Mat energy = cv::abs(filtered);
       energy.rowRange(0, h).setTo(cv::Scalar(0.0));
       energy.rowRange(sx - h, sx).setTo(cv::Scalar(0.0));

@@ -4,6 +4,8 @@
 #include "saot_config.hpp"
 #include "template.hpp"
 #include "misc.hpp"
+#include "filter.hpp"
+#include "./layers/layer.hpp"
 #include <assert.h>
 #include <cmath>
 #include <algorithm> 
@@ -76,13 +78,12 @@ void SAOT_Inference::LoadImageAndFeature()
 	double resolutionStart = .6;
 	double resolutionStep = .2;
 
-    cv::Mat image, tmpIm;
+    cv::Mat tmpIm;
     std::string name = ("./inference/"+imageFolder+"/" + imageName);
     std::cout << "Loaded Image: " +  name << std::endl;
     assert(exists_test(name));
-    image = cv::imread( name.c_str(), CV_LOAD_IMAGE_COLOR);
+    tmpIm = cv::imread( name.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 
-    cv::cvtColor(image, tmpIm, cv::COLOR_RGB2GRAY);
     std::cout << "image size: " << tmpIm.rows <<" " << tmpIm.cols << std::endl;
 
 
@@ -91,21 +92,38 @@ void SAOT_Inference::LoadImageAndFeature()
     cv::resize(tmpIm,I, cv::Size(), config.resize_factor, config.resize_factor,cv::INTER_NEAREST);
 
 
-    ImageMultiResolution.resize(boost::extents[1][config.num_resolution]);
+    ImageMultiResolution.resize(boost::extents[config.num_resolution]);
     for(int i = 0; i < config.num_resolution; i++)
     {
     	double resolution = resolutionStart + i*resolutionStep;
-    	cv::resize(I,ImageMultiResolution[0][i], cv::Size(), resolution, resolution,cv::INTER_NEAREST);
+    	std::cout << resolution << std::endl;
+    	cv::resize(I,ImageMultiResolution[i], cv::Size(), resolution, resolution,cv::INTER_NEAREST);
+    	ImageMultiResolution[i].convertTo(ImageMultiResolution[i], CV_32F);
     }
+    //std::cout << ImageMultiResolution[0] <<std::endl;
+    cv::Mat temp;
+    //ImageMultiResolution[0].convertTo(temp,  CV_8U);
+    //std::cout << temp<<std::endl; 
+    map_sum1_find.resize(boost::extents[ImageMultiResolution.shape()[0]][config.allFilter.shape()[0]]);
+    ApplyFilterfft(config, ImageMultiResolution, config.allFilter, map_sum1_find);
 
-    /////////////////////////////////
-    // debug code
+    Sigmoid(config, map_sum1_find);
 
-    // cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );// Create a window for display.
-    // cv::imshow( "Display window", ImageMultiResolution[0][3] );                   // Show our image inside it.
+    ///////////////////////////////// debug code
 
-    // cv::waitKey(0);                                          // Wait for a keystroke in the window
+    // cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );
+    // cv::imshow( "Display window", ImageMultiResolution[3] );                
+    // cv::waitKey(0);                                       
     //////////////////////////////////
+
+
+    MAX1map.resize(boost::extents[map_sum1_find.shape()[0]][map_sum1_find.shape()[1]]);
+    M1Trace.resize(boost::extents[map_sum1_find.shape()[0]][map_sum1_find.shape()[1]]);
+
+    
+    ComputeMAX1(config,map_sum1_find, MAX1map, M1Trace,
+                 M1RowShift, M1ColShift, M1OriShifted);
+    
 
 
 }
@@ -400,14 +418,17 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 				
 			
 			// also crop the corresponding image patch (for each part)
-
-			CropInstance(configs,ImageMultiResolution[bestPartRes],tmpCropped,Fx,Fy,
+			//////////////////////////////////////////////////////////////
+			/// bug here
+			//////////////////////////////////////////////////////////////
+			cv::Mat tmpCropped2;
+			CropInstance(configs,ImageMultiResolution[bestPartRes],tmpCropped2,Fx,Fy,
 				actualPartRotation,tScale,1,
-				outRow.data(),outCol.data(),
+				outRow,outCol,
 				1,1,configs.partSizeX,configs.partSizeY);
 
 			morphedPatch(cv::Rect_<int>(configs.PartLocX[iPart], configs.PartLocX[iPart]+configs.partSizeX,
-				 configs.PartLocY[iPart], configs.PartLocY[iPart]+configs.partSizeY )) = tmpCropped[0];
+				 configs.PartLocY[iPart], configs.PartLocY[iPart]+configs.partSizeY )) = tmpCropped2;
 		}
 	 
 		
@@ -429,9 +450,9 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 			if(gaborX > 0 && gaborX <= size(M1Trace[bestPartRes][1],1) && gaborY > 0 && gaborY <= size(M1Trace[bestPartRes][1],2) )
 			{
 				int trace = M1Trace[bestPartRes][gaborO+1].at<int>(gaborX,gaborY) + 1;
-				int dx = M1RowShift[gaborO+1].at<int>(trace,1);
-				int dy = M1ColShift[gaborO+1].at<int>(trace,1);
-				int shiftedo = M1OriShifted[gaborO+1].at<int>(trace,1);
+				int dx = M1RowShift.at<int>(gaborO+1,trace);
+				int dy = M1ColShift.at<int>(gaborO+1,trace);
+				int shiftedo = M1OriShifted.at<int>(gaborO+1,trace);
 				double gaborX = floor(.5 + gaborX + dx);
 				double gaborY = floor(.5 + gaborY + dy);
 				double gaborO = double(shiftedo);
