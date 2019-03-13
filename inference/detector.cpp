@@ -7,8 +7,17 @@
 #include <assert.h>
 #include <cmath>
 #include <algorithm> 
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string>
+#include <fstream>
+
 namespace AOG_LIB {
 namespace SAOT {
+
+static inline bool exists_test (const std::string& name) {
+    return ( access( name.c_str(), F_OK ) != -1 );
+}
 
 SAOT_Inference::SAOT_Inference()
 {
@@ -32,11 +41,73 @@ SAOT_Inference::SAOT_Inference()
 	
 	LoadConfig();
 	morphedPatch = ( cv::Mat_<double>(config.template_size[0], config.template_size[1]) );
+
+	partAbsoluteLocation = std::vector<std::vector<int> >(config.numCandPart, std::vector<int>(2) );
+	partAbsoluteRotation = std::vector<int >(config.numCandPart );
+	partAbsoluteResolution = std::vector<int>(config.numCandPart );
+	gaborAbsoluteLocation = std::vector<std::vector<int> >(config.num_element, std::vector<int>(2) );
+	gaborAbsoluteRotation = std::vector<int>(config.num_element);
+	gaborAbsoluteResolution = std::vector<int>(config.num_element );
+
+	partScores = std::vector<double>(config.numCandPart);
+	gaborResponses = std::vector<double>(config.num_element );
+
+	if (doMorphBackS1map)
+	{
+		morphedSUM1map.resize(boost::extents[config.num_orient]);
+		for(int i = 0; i < config.num_orient; i++)
+		{
+			morphedSUM1map[i]= cv::Mat::zeros(config.template_size[0], config.template_size[1],CV_64F);
+		}
+		morphedPatch = cv::Mat::zeros(config.template_size[0], config.template_size[1],CV_64F);
+	}
+
+	LoadImageAndFeature();
+
 }
 
 void SAOT_Inference::LoadConfig()
 {
 	LoadConfigFile( "./inference/config.yml",config);
+}
+
+void SAOT_Inference::LoadImageAndFeature()
+{
+	double resolutionStart = .6;
+	double resolutionStep = .2;
+
+    cv::Mat image, tmpIm;
+    std::string name = ("./inference/"+imageFolder+"/" + imageName);
+    std::cout << "Loaded Image: " +  name << std::endl;
+    assert(exists_test(name));
+    image = cv::imread( name.c_str(), CV_LOAD_IMAGE_COLOR);
+
+    cv::cvtColor(image, tmpIm, cv::COLOR_RGB2GRAY);
+    std::cout << "image size: " << tmpIm.rows <<" " << tmpIm.cols << std::endl;
+
+
+
+    cv::Mat I;
+    cv::resize(tmpIm,I, cv::Size(), config.resize_factor, config.resize_factor,cv::INTER_NEAREST);
+
+
+    ImageMultiResolution.resize(boost::extents[1][config.num_resolution]);
+    for(int i = 0; i < config.num_resolution; i++)
+    {
+    	double resolution = resolutionStart + i*resolutionStep;
+    	cv::resize(I,ImageMultiResolution[0][i], cv::Size(), resolution, resolution,cv::INTER_NEAREST);
+    }
+
+    /////////////////////////////////
+    // debug code
+
+    // cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );// Create a window for display.
+    // cv::imshow( "Display window", ImageMultiResolution[0][3] );                   // Show our image inside it.
+
+    // cv::waitKey(0);                                          // Wait for a keystroke in the window
+    //////////////////////////////////
+
+
 }
 
 template <class type>

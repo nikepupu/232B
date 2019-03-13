@@ -91,6 +91,9 @@ namespace SAOT{
 
 	private:
 	void LoadConfig();
+
+	/////////////
+	void LoadImageAndFeature();
 	/////////////
 	/// size function
 	template <class type>
@@ -181,17 +184,20 @@ namespace SAOT{
 	int objRotation = 0;
 	int objResolution = 0;
 	int objLocation[2] = {0,0};
-	int objScore = 0;
+	int objScore = 0; //record MAX3 score
 
 	int therex;
 	int therey;
 	int bestRes;
 
+	std::vector<double> gaborResponses;
+	std::vector<double> partScores;
+
 	MatCell_1<cv::Mat> M1RowShift;
 	MatCell_1<cv::Mat> M1ColShift;
 	MatCell_1<cv::Mat> M1OriShifted;
-	MatCell_1<cv::Mat> gaborResponses;
 	MatCell_1<cv::Mat> morphedSUM1map;
+
 
 	MatCell_2<cv::Mat> M1Trace;
 
@@ -210,12 +216,13 @@ namespace SAOT{
 
 
 
-	std::vector<std::vector<int> > partAbsoluteLocation = std::vector<std::vector<int> >(config.numCandPart, std::vector<int>(2) );
-	std::vector<int> partAbsoluteRotation = std::vector<int >(config.numCandPart );
-	std::vector<int> partAbsoluteResolution = std::vector<int>(config.numCandPart );
-	std::vector<std::vector<int> > gaborAbsoluteLocation = std::vector<std::vector<int> >(config.num_element, std::vector<int>(2) );
-	std::vector<int > gaborAbsoluteRotation = std::vector<int>(config.num_element);
-	std::vector<int> gaborAbsoluteResolution = std::vector<int>(config.num_element );
+	std::vector<std::vector<int> > partAbsoluteLocation;
+	std::vector<int> partAbsoluteRotation;
+	std::vector<int> partAbsoluteResolution;
+	std::vector<std::vector<int> > gaborAbsoluteLocation;
+	std::vector<int > gaborAbsoluteRotation;
+	std::vector<int> gaborAbsoluteResolution;
+
 
 
 	//////////// configuration file variables
