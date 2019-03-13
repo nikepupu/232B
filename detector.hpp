@@ -35,7 +35,7 @@ namespace SAOT{
 		return res;
 	}
 
-
+	// test if a element  equals to a vector logical array the same as above
 	template <class type>
 	std::vector<int> operator==(const type t, const std::vector<type> tmp)
 	{
@@ -51,6 +51,7 @@ namespace SAOT{
 		return res;
 	}
 
+	// vector divide by a vector
 	template <class type>
 	double operator/(const std::vector<type> tmp1,const std::vector<type> tmp2 )
 	{
@@ -68,6 +69,15 @@ namespace SAOT{
 			}
 
 		}
+		return res;
+	}
+
+	template<class type>
+	std::vector<type> operator-(const std::vector<type> vec, const type num)
+	{
+		std::vector<type> res;
+		for(auto it : vec)
+			res.emplace_back(it-num);
 		return res;
 	}
 

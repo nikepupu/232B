@@ -11,7 +11,18 @@ REQUIRED
 )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -g")
+file(GLOB SAOT_HEADER_FILES 
+          ${PROJECT_SOURCE_DIR}/*.hpp
+          ${PROJECT_SOURCE_DIR}/layers/*.hpp
+          ${PROJECT_SOURCE_DIR}/util/*.hpp
+)
 
-add_executable(  res main.cpp detector.cpp saot_inference_Config.cpp filter.cpp misc.cpp)
+file(GLOB SAOT_SOURCE_FILES 
+          ${PROJECT_SOURCE_DIR}/*.cpp
+          ${PROJECT_SOURCE_DIR}/layers/*.cpp
+          ${PROJECT_SOURCE_DIR}/util/*.cpp
+)
+
+add_executable(res ${SAOT_HEADER_FILES} ${SAOT_SOURCE_FILES})
 
 target_link_libraries(res ${OpenCV_LIBS} ${CMAKE_THREAD_LIBS_INIT} ${Boost_LIBRARIES})

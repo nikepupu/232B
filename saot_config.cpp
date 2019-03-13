@@ -6,6 +6,7 @@
 #include <opencv2/core/core.hpp>
 #include "util/file_util.hpp"
 #include "util/mat_util.hpp"
+#include "util/meta_type.hpp"
 
 namespace AOG_LIB {
 namespace SAOT {
@@ -34,12 +35,50 @@ bool LoadConfigFile(const std::string &filename, SAOTConfig &config) {
   config.part_size[0] = config.template_size[0] / 2;
   config.part_size[1] = config.template_size[1] / 2;
 
+  // [Deprecated] used template.part_loc_x0 and template.part_loc_y0 instead
   std::vector<int>partloc_x0 = std::vector<int>();
   std::vector<int>partloc_y0 = std::vector<int>();
   UTIL::MatlabColonExpression(0, config.part_size[0], config.template_size[0] - config.part_size[0] + 1, partloc_x0);
   UTIL::MatlabColonExpression(0, config.part_size[0], config.template_size[0] - config.part_size[0] + 1, partloc_x0);
   config.numCandPart = partloc_x0.size() * partloc_y0.size();
+
+  config.part_loc_x = std::vector<int>();
+  config.part_loc_y = std::vector<int>();
+  for (int x : partloc_x0) {
+    for (int y : partloc_y0) {
+      config.part_loc_x.push_back(x);
+      config.part_loc_y.push_back(y);
+    }
+  }
+
+  int _part_rotate_start = static_cast<int>(fs["part_rotate"]["start"]);
+  int _part_rotate_end   = static_cast<int>(fs["part_rotate"]["end"]);
+  int _part_rotate_scale = static_cast<int>(fs["part_rotate"]["scale"]);
+
+  config.num_part_rotation = _part_rotate_end - _part_rotate_start + 1;
+  config.part_rotation_range = new int[config.num_part_rotation];
+  for (int i = 0; i < config.num_part_rotation; i++)
+    config.part_rotation_range[i] = (i + _part_rotate_start) * _part_rotate_scale;
+    
+  config.location_shift_limit = static_cast<int>(fs["location_shift_limit"]);
+  config.orient_shift_limit = static_cast<int>(fs["orient_shift_limit"]);
   
+  config.max_part_relative_rotation = 2;
+  config.resolution_shift_limit = 1;
+  config.min_rotation_dif = pow(sin(config.max_part_relative_rotation * PI / config.num_orient) - sin(0), 2) + pow(cos(config.max_part_relative_rotation  * PI / config.num_orient) - cos(0), 2) + 1e-10;
+
+  int _rotate_start = static_cast<int>(fs["obj_rotate"]["start"]);
+  int _rotate_end   = static_cast<int>(fs["obj_rotate"]["end"]);
+  int _rotate_scale = static_cast<int>(fs["obj_rotate"]["scale"]);
+  config.num_rotate = _rotate_end - _rotate_start + 1;
+  config.rotation_range = new int[config.num_rotate];
+  for (int i = 0; i < config.num_part_rotation; i++)
+    config.rotation_range[i] = (i + _rotate_start) * _rotate_scale;
+
+  config.startx = 1; config.starty = 1;
+  config.endx = config.startx + config.template_size[0] - 1;
+  config.endy = config.starty + config.template_size[1] - 1;
+
   return true;
 }
 

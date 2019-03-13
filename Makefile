@@ -150,6 +150,33 @@ detector.cpp.s:
 	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/detector.cpp.s
 .PHONY : detector.cpp.s
 
+exponential_model.o: exponential_model.cpp.o
+
+.PHONY : exponential_model.o
+
+# target to build an object file
+exponential_model.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/exponential_model.cpp.o
+.PHONY : exponential_model.cpp.o
+
+exponential_model.i: exponential_model.cpp.i
+
+.PHONY : exponential_model.i
+
+# target to preprocess a source file
+exponential_model.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/exponential_model.cpp.i
+.PHONY : exponential_model.cpp.i
+
+exponential_model.s: exponential_model.cpp.s
+
+.PHONY : exponential_model.s
+
+# target to generate assembly for a file
+exponential_model.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/exponential_model.cpp.s
+.PHONY : exponential_model.cpp.s
+
 filter.o: filter.cpp.o
 
 .PHONY : filter.o
@@ -176,6 +203,87 @@ filter.s: filter.cpp.s
 filter.cpp.s:
 	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/filter.cpp.s
 .PHONY : filter.cpp.s
+
+layers/layer1.o: layers/layer1.cpp.o
+
+.PHONY : layers/layer1.o
+
+# target to build an object file
+layers/layer1.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer1.cpp.o
+.PHONY : layers/layer1.cpp.o
+
+layers/layer1.i: layers/layer1.cpp.i
+
+.PHONY : layers/layer1.i
+
+# target to preprocess a source file
+layers/layer1.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer1.cpp.i
+.PHONY : layers/layer1.cpp.i
+
+layers/layer1.s: layers/layer1.cpp.s
+
+.PHONY : layers/layer1.s
+
+# target to generate assembly for a file
+layers/layer1.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer1.cpp.s
+.PHONY : layers/layer1.cpp.s
+
+layers/layer2.o: layers/layer2.cpp.o
+
+.PHONY : layers/layer2.o
+
+# target to build an object file
+layers/layer2.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer2.cpp.o
+.PHONY : layers/layer2.cpp.o
+
+layers/layer2.i: layers/layer2.cpp.i
+
+.PHONY : layers/layer2.i
+
+# target to preprocess a source file
+layers/layer2.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer2.cpp.i
+.PHONY : layers/layer2.cpp.i
+
+layers/layer2.s: layers/layer2.cpp.s
+
+.PHONY : layers/layer2.s
+
+# target to generate assembly for a file
+layers/layer2.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer2.cpp.s
+.PHONY : layers/layer2.cpp.s
+
+layers/layer3.o: layers/layer3.cpp.o
+
+.PHONY : layers/layer3.o
+
+# target to build an object file
+layers/layer3.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer3.cpp.o
+.PHONY : layers/layer3.cpp.o
+
+layers/layer3.i: layers/layer3.cpp.i
+
+.PHONY : layers/layer3.i
+
+# target to preprocess a source file
+layers/layer3.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer3.cpp.i
+.PHONY : layers/layer3.cpp.i
+
+layers/layer3.s: layers/layer3.cpp.s
+
+.PHONY : layers/layer3.s
+
+# target to generate assembly for a file
+layers/layer3.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer3.cpp.s
+.PHONY : layers/layer3.cpp.s
 
 main.o: main.cpp.o
 
@@ -231,6 +339,33 @@ misc.cpp.s:
 	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/misc.cpp.s
 .PHONY : misc.cpp.s
 
+saot_config.o: saot_config.cpp.o
+
+.PHONY : saot_config.o
+
+# target to build an object file
+saot_config.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/saot_config.cpp.o
+.PHONY : saot_config.cpp.o
+
+saot_config.i: saot_config.cpp.i
+
+.PHONY : saot_config.i
+
+# target to preprocess a source file
+saot_config.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/saot_config.cpp.i
+.PHONY : saot_config.cpp.i
+
+saot_config.s: saot_config.cpp.s
+
+.PHONY : saot_config.s
+
+# target to generate assembly for a file
+saot_config.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/saot_config.cpp.s
+.PHONY : saot_config.cpp.s
+
 saot_inference_Config.o: saot_inference_Config.cpp.o
 
 .PHONY : saot_inference_Config.o
@@ -258,6 +393,114 @@ saot_inference_Config.cpp.s:
 	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/saot_inference_Config.cpp.s
 .PHONY : saot_inference_Config.cpp.s
 
+template.o: template.cpp.o
+
+.PHONY : template.o
+
+# target to build an object file
+template.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/template.cpp.o
+.PHONY : template.cpp.o
+
+template.i: template.cpp.i
+
+.PHONY : template.i
+
+# target to preprocess a source file
+template.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/template.cpp.i
+.PHONY : template.cpp.i
+
+template.s: template.cpp.s
+
+.PHONY : template.s
+
+# target to generate assembly for a file
+template.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/template.cpp.s
+.PHONY : template.cpp.s
+
+test.o: test.cpp.o
+
+.PHONY : test.o
+
+# target to build an object file
+test.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/test.cpp.o
+.PHONY : test.cpp.o
+
+test.i: test.cpp.i
+
+.PHONY : test.i
+
+# target to preprocess a source file
+test.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/test.cpp.i
+.PHONY : test.cpp.i
+
+test.s: test.cpp.s
+
+.PHONY : test.s
+
+# target to generate assembly for a file
+test.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/test.cpp.s
+.PHONY : test.cpp.s
+
+util/file_util.o: util/file_util.cpp.o
+
+.PHONY : util/file_util.o
+
+# target to build an object file
+util/file_util.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/util/file_util.cpp.o
+.PHONY : util/file_util.cpp.o
+
+util/file_util.i: util/file_util.cpp.i
+
+.PHONY : util/file_util.i
+
+# target to preprocess a source file
+util/file_util.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/util/file_util.cpp.i
+.PHONY : util/file_util.cpp.i
+
+util/file_util.s: util/file_util.cpp.s
+
+.PHONY : util/file_util.s
+
+# target to generate assembly for a file
+util/file_util.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/util/file_util.cpp.s
+.PHONY : util/file_util.cpp.s
+
+util/mat_util.o: util/mat_util.cpp.o
+
+.PHONY : util/mat_util.o
+
+# target to build an object file
+util/mat_util.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/util/mat_util.cpp.o
+.PHONY : util/mat_util.cpp.o
+
+util/mat_util.i: util/mat_util.cpp.i
+
+.PHONY : util/mat_util.i
+
+# target to preprocess a source file
+util/mat_util.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/util/mat_util.cpp.i
+.PHONY : util/mat_util.cpp.i
+
+util/mat_util.s: util/mat_util.cpp.s
+
+.PHONY : util/mat_util.s
+
+# target to generate assembly for a file
+util/mat_util.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/util/mat_util.cpp.s
+.PHONY : util/mat_util.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -270,18 +513,45 @@ help:
 	@echo "... detector.o"
 	@echo "... detector.i"
 	@echo "... detector.s"
+	@echo "... exponential_model.o"
+	@echo "... exponential_model.i"
+	@echo "... exponential_model.s"
 	@echo "... filter.o"
 	@echo "... filter.i"
 	@echo "... filter.s"
+	@echo "... layers/layer1.o"
+	@echo "... layers/layer1.i"
+	@echo "... layers/layer1.s"
+	@echo "... layers/layer2.o"
+	@echo "... layers/layer2.i"
+	@echo "... layers/layer2.s"
+	@echo "... layers/layer3.o"
+	@echo "... layers/layer3.i"
+	@echo "... layers/layer3.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... misc.o"
 	@echo "... misc.i"
 	@echo "... misc.s"
+	@echo "... saot_config.o"
+	@echo "... saot_config.i"
+	@echo "... saot_config.s"
 	@echo "... saot_inference_Config.o"
 	@echo "... saot_inference_Config.i"
 	@echo "... saot_inference_Config.s"
+	@echo "... template.o"
+	@echo "... template.i"
+	@echo "... template.s"
+	@echo "... test.o"
+	@echo "... test.i"
+	@echo "... test.s"
+	@echo "... util/file_util.o"
+	@echo "... util/file_util.i"
+	@echo "... util/file_util.s"
+	@echo "... util/mat_util.o"
+	@echo "... util/mat_util.i"
+	@echo "... util/mat_util.s"
 .PHONY : help
 
 

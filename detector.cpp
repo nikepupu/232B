@@ -115,9 +115,7 @@ mat SAOT_Inference::find(std::vector<type> tmp)
 	return t;
 	
 }
-// void SAOT_Inference::displayMatchedTemplate(std::vector<int> latticeSize, std::vector<int> selectedRow, 
-//  std::vector<int> selectedCol, std::vector<int> selectedO, std::vector<int> selectedS, 
-//  std::vector<int>selectedMean, MatCell_1<int> allsymbol, int nGaborOri)
+
 
 cv::Mat SAOT_Inference::drawGaborSymbol(cv::Mat im, MatCell_1<cv::Mat> &allsymbol, int row, int col, int orientationIndex, int nGaborOri, 
 	int scaleIndex, double intensity )
@@ -264,6 +262,7 @@ void SAOT_Inference::TraceBack(SAOTInferenceConfig &configs)
 	        {
 	        	denseY.emplace_back(-floor(configs.partSizeY/2) + i+1);
 	        }
+
 	        count = 0;
 	        ///////////////////////////////////////////////////
 	        ////// need to modify this part
@@ -389,36 +388,55 @@ void SAOT_Inference::TraceBack(SAOTInferenceConfig &configs)
 			{
 	            int margin = 3;
 	            //xx = repmat((1:partSizeX),1,margin*2);
-	            cv::Mat src= cv::Mat::zeros(1,configs.partSizeX, cv::CV_64F);
+	            cv::Mat src= cv::Mat::zeros(1,configs.partSizeX, CV_64F);
 	            for(int i = 0; i < configs.partSizeX;i++)
 	            	src.at<double>(1,i) = i+1;
 	            
 
 	            
 
-	           	// cv::Mat xx = cv::repeat( src,1,margin*2,xx);
-	            // std::vector<int> yt;
+	           	cv::Mat xx;
+	           	cv::repeat( src,1,margin*2,xx);
+	            std::vector<double> yt;
+	            std::vector<double> yy;
 
-	            // for(int y = 1; y <= magin; y++ )
-	            // 	yt.push_back(y);
+	            for(int y = 1; y <= margin; y++ )
+	            	yt.push_back(y);
 
-	            // for(int y = partSizeY-margin+1; y <= partSizeY; y++)
-	            // 	yt.push_back(y);
+	            for(int y = configs.partSizeY-margin+1; y <= configs.partSizeY; y++)
+	            	yt.push_back(y);
 
 
 	            // for y = [1:margin partSizeY-margin+1:partSizeY]
 	            //     yt = [yy,ones(1,partSizeX)*y];
 
 	           
-	           	
+	            for(int y:yt)
+	            {
+	            	for(int i= 0; i < configs.partSizeY; i++)
+	            	yy.push_back(y);
+	            }
 
-	            // yy = [yy,repmat((1:partSizeY),1,margin*2)];
+	            cv::Mat tempMat;
+	            cv::hconcat(yy, xx, yy);
 
-	            // for x = [1:margin partSizeX-margin+1:partSizeX]
-	            //     xx = [xx,ones(1,partSizeY)*x];
-	            // end
-	            // inRow = single(xx-floor(partSizeX/2)); inCol = single(yy-floor(partSizeY/2));
-	            // tScale = 0; rScale = 1; cScale = 1; inO = zeros(numel(inRow),1,'single'); inS = zeros(numel(inRow),1,'single');
+	            for(int x : yt)
+	            {
+	            	cv::hconcat(xx,x*cv::Mat::ones(1,configs.partSizeY,CV_64F),xx);
+	            }
+
+	            cv::Mat inRow,inCol;
+	            inRow = xx-(double)floor(configs.partSizeX/2);
+	            
+
+	            std::vector<double> tempVec  = yy-(double)floor(configs.partSizeY/2);
+	            memcpy(inCol.data, tempVec.data(), tempVec.size()*sizeof(double));
+	            int tScale=0,rScale=1,cScale=1;
+
+	            cv::Mat inO = cv::Mat::zeros(std::max(inRow.rows, inRow.cols), 1,CV_64F);
+	            cv::Mat inS = cv::Mat::zeros(std::max(inRow.rows, inRow.cols), 1,CV_64F);
+
+
 	            // [outRow, outCol] = ...
 	            //     mexc_TemplateAffineTransform(tScale,rScale,cScale,...
 	            //         actualPartRotation,inRow,inCol,inO,inS,numOrient);

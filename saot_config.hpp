@@ -15,10 +15,12 @@ struct SAOTConfig {
   std::string bkg_img_dir;
   double resize_factor;
   int num_resolution;
+  int original_resolution;
   int template_size[2], part_size[2];
   int *part_rotation_range;
   int num_part_rotation;
   int max_part_relative_rotation;
+  int resolution_shift_limit;
   double min_rotation_dif;
   int* rotation_range;
   int num_rotate;
@@ -37,10 +39,16 @@ struct SAOTConfig {
   int local_half_x, local_half_y;
   int half_filter_size;
   double threshold_factor;
+  double scale_filter;
+  double bin_size;
   double saturation;
-  int numStoredPoint; /* number of stored points of lambda in exponential model */   
+  int num_stored_point;  /* number of stored points of lambda in exponential model */
+  int numStoredPoint; /* deprecated*/
   int num_iteration;
   int numCandPart;
+  int startx, starty, endx, endy;
+  std::vector<int> part_loc_x;
+  std::vector<int> part_loc_y;
 };
 
 bool GetCmdOptions(int argc, char** argv, SAOTConfig& config);

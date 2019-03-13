@@ -57,33 +57,9 @@ include CMakeFiles/res.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/res.dir/flags.make
 
-CMakeFiles/res.dir/main.cpp.o: CMakeFiles/res.dir/flags.make
-CMakeFiles/res.dir/main.cpp.o: main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/res.dir/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/main.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/main.cpp
-
-CMakeFiles/res.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/main.cpp > CMakeFiles/res.dir/main.cpp.i
-
-CMakeFiles/res.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/main.cpp -o CMakeFiles/res.dir/main.cpp.s
-
-CMakeFiles/res.dir/main.cpp.o.requires:
-
-.PHONY : CMakeFiles/res.dir/main.cpp.o.requires
-
-CMakeFiles/res.dir/main.cpp.o.provides: CMakeFiles/res.dir/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/main.cpp.o.provides.build
-.PHONY : CMakeFiles/res.dir/main.cpp.o.provides
-
-CMakeFiles/res.dir/main.cpp.o.provides.build: CMakeFiles/res.dir/main.cpp.o
-
-
 CMakeFiles/res.dir/detector.cpp.o: CMakeFiles/res.dir/flags.make
 CMakeFiles/res.dir/detector.cpp.o: detector.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/res.dir/detector.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/res.dir/detector.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/detector.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/detector.cpp
 
 CMakeFiles/res.dir/detector.cpp.i: cmake_force
@@ -105,33 +81,33 @@ CMakeFiles/res.dir/detector.cpp.o.provides: CMakeFiles/res.dir/detector.cpp.o.re
 CMakeFiles/res.dir/detector.cpp.o.provides.build: CMakeFiles/res.dir/detector.cpp.o
 
 
-CMakeFiles/res.dir/saot_inference_Config.cpp.o: CMakeFiles/res.dir/flags.make
-CMakeFiles/res.dir/saot_inference_Config.cpp.o: saot_inference_Config.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/res.dir/saot_inference_Config.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/saot_inference_Config.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/saot_inference_Config.cpp
+CMakeFiles/res.dir/exponential_model.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/exponential_model.cpp.o: exponential_model.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/res.dir/exponential_model.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/exponential_model.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/exponential_model.cpp
 
-CMakeFiles/res.dir/saot_inference_Config.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/saot_inference_Config.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/saot_inference_Config.cpp > CMakeFiles/res.dir/saot_inference_Config.cpp.i
+CMakeFiles/res.dir/exponential_model.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/exponential_model.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/exponential_model.cpp > CMakeFiles/res.dir/exponential_model.cpp.i
 
-CMakeFiles/res.dir/saot_inference_Config.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/saot_inference_Config.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/saot_inference_Config.cpp -o CMakeFiles/res.dir/saot_inference_Config.cpp.s
+CMakeFiles/res.dir/exponential_model.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/exponential_model.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/exponential_model.cpp -o CMakeFiles/res.dir/exponential_model.cpp.s
 
-CMakeFiles/res.dir/saot_inference_Config.cpp.o.requires:
+CMakeFiles/res.dir/exponential_model.cpp.o.requires:
 
-.PHONY : CMakeFiles/res.dir/saot_inference_Config.cpp.o.requires
+.PHONY : CMakeFiles/res.dir/exponential_model.cpp.o.requires
 
-CMakeFiles/res.dir/saot_inference_Config.cpp.o.provides: CMakeFiles/res.dir/saot_inference_Config.cpp.o.requires
-	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/saot_inference_Config.cpp.o.provides.build
-.PHONY : CMakeFiles/res.dir/saot_inference_Config.cpp.o.provides
+CMakeFiles/res.dir/exponential_model.cpp.o.provides: CMakeFiles/res.dir/exponential_model.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/exponential_model.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/exponential_model.cpp.o.provides
 
-CMakeFiles/res.dir/saot_inference_Config.cpp.o.provides.build: CMakeFiles/res.dir/saot_inference_Config.cpp.o
+CMakeFiles/res.dir/exponential_model.cpp.o.provides.build: CMakeFiles/res.dir/exponential_model.cpp.o
 
 
 CMakeFiles/res.dir/filter.cpp.o: CMakeFiles/res.dir/flags.make
 CMakeFiles/res.dir/filter.cpp.o: filter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/res.dir/filter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/res.dir/filter.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/filter.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/filter.cpp
 
 CMakeFiles/res.dir/filter.cpp.i: cmake_force
@@ -151,6 +127,30 @@ CMakeFiles/res.dir/filter.cpp.o.provides: CMakeFiles/res.dir/filter.cpp.o.requir
 .PHONY : CMakeFiles/res.dir/filter.cpp.o.provides
 
 CMakeFiles/res.dir/filter.cpp.o.provides.build: CMakeFiles/res.dir/filter.cpp.o
+
+
+CMakeFiles/res.dir/main.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/main.cpp.o: main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/res.dir/main.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/main.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/main.cpp
+
+CMakeFiles/res.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/main.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/main.cpp > CMakeFiles/res.dir/main.cpp.i
+
+CMakeFiles/res.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/main.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/main.cpp -o CMakeFiles/res.dir/main.cpp.s
+
+CMakeFiles/res.dir/main.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/main.cpp.o.requires
+
+CMakeFiles/res.dir/main.cpp.o.provides: CMakeFiles/res.dir/main.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/main.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/main.cpp.o.provides
+
+CMakeFiles/res.dir/main.cpp.o.provides.build: CMakeFiles/res.dir/main.cpp.o
 
 
 CMakeFiles/res.dir/misc.cpp.o: CMakeFiles/res.dir/flags.make
@@ -177,22 +177,256 @@ CMakeFiles/res.dir/misc.cpp.o.provides: CMakeFiles/res.dir/misc.cpp.o.requires
 CMakeFiles/res.dir/misc.cpp.o.provides.build: CMakeFiles/res.dir/misc.cpp.o
 
 
+CMakeFiles/res.dir/saot_config.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/saot_config.cpp.o: saot_config.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/res.dir/saot_config.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/saot_config.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/saot_config.cpp
+
+CMakeFiles/res.dir/saot_config.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/saot_config.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/saot_config.cpp > CMakeFiles/res.dir/saot_config.cpp.i
+
+CMakeFiles/res.dir/saot_config.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/saot_config.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/saot_config.cpp -o CMakeFiles/res.dir/saot_config.cpp.s
+
+CMakeFiles/res.dir/saot_config.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/saot_config.cpp.o.requires
+
+CMakeFiles/res.dir/saot_config.cpp.o.provides: CMakeFiles/res.dir/saot_config.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/saot_config.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/saot_config.cpp.o.provides
+
+CMakeFiles/res.dir/saot_config.cpp.o.provides.build: CMakeFiles/res.dir/saot_config.cpp.o
+
+
+CMakeFiles/res.dir/saot_inference_Config.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/saot_inference_Config.cpp.o: saot_inference_Config.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/res.dir/saot_inference_Config.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/saot_inference_Config.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/saot_inference_Config.cpp
+
+CMakeFiles/res.dir/saot_inference_Config.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/saot_inference_Config.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/saot_inference_Config.cpp > CMakeFiles/res.dir/saot_inference_Config.cpp.i
+
+CMakeFiles/res.dir/saot_inference_Config.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/saot_inference_Config.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/saot_inference_Config.cpp -o CMakeFiles/res.dir/saot_inference_Config.cpp.s
+
+CMakeFiles/res.dir/saot_inference_Config.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/saot_inference_Config.cpp.o.requires
+
+CMakeFiles/res.dir/saot_inference_Config.cpp.o.provides: CMakeFiles/res.dir/saot_inference_Config.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/saot_inference_Config.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/saot_inference_Config.cpp.o.provides
+
+CMakeFiles/res.dir/saot_inference_Config.cpp.o.provides.build: CMakeFiles/res.dir/saot_inference_Config.cpp.o
+
+
+CMakeFiles/res.dir/template.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/template.cpp.o: template.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/res.dir/template.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/template.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/template.cpp
+
+CMakeFiles/res.dir/template.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/template.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/template.cpp > CMakeFiles/res.dir/template.cpp.i
+
+CMakeFiles/res.dir/template.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/template.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/template.cpp -o CMakeFiles/res.dir/template.cpp.s
+
+CMakeFiles/res.dir/template.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/template.cpp.o.requires
+
+CMakeFiles/res.dir/template.cpp.o.provides: CMakeFiles/res.dir/template.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/template.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/template.cpp.o.provides
+
+CMakeFiles/res.dir/template.cpp.o.provides.build: CMakeFiles/res.dir/template.cpp.o
+
+
+CMakeFiles/res.dir/test.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/test.cpp.o: test.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/res.dir/test.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/test.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/test.cpp
+
+CMakeFiles/res.dir/test.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/test.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/test.cpp > CMakeFiles/res.dir/test.cpp.i
+
+CMakeFiles/res.dir/test.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/test.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/test.cpp -o CMakeFiles/res.dir/test.cpp.s
+
+CMakeFiles/res.dir/test.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/test.cpp.o.requires
+
+CMakeFiles/res.dir/test.cpp.o.provides: CMakeFiles/res.dir/test.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/test.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/test.cpp.o.provides
+
+CMakeFiles/res.dir/test.cpp.o.provides.build: CMakeFiles/res.dir/test.cpp.o
+
+
+CMakeFiles/res.dir/layers/layer1.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/layers/layer1.cpp.o: layers/layer1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/res.dir/layers/layer1.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/layers/layer1.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/layers/layer1.cpp
+
+CMakeFiles/res.dir/layers/layer1.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/layers/layer1.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/layers/layer1.cpp > CMakeFiles/res.dir/layers/layer1.cpp.i
+
+CMakeFiles/res.dir/layers/layer1.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/layers/layer1.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/layers/layer1.cpp -o CMakeFiles/res.dir/layers/layer1.cpp.s
+
+CMakeFiles/res.dir/layers/layer1.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/layers/layer1.cpp.o.requires
+
+CMakeFiles/res.dir/layers/layer1.cpp.o.provides: CMakeFiles/res.dir/layers/layer1.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer1.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/layers/layer1.cpp.o.provides
+
+CMakeFiles/res.dir/layers/layer1.cpp.o.provides.build: CMakeFiles/res.dir/layers/layer1.cpp.o
+
+
+CMakeFiles/res.dir/layers/layer2.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/layers/layer2.cpp.o: layers/layer2.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/res.dir/layers/layer2.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/layers/layer2.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/layers/layer2.cpp
+
+CMakeFiles/res.dir/layers/layer2.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/layers/layer2.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/layers/layer2.cpp > CMakeFiles/res.dir/layers/layer2.cpp.i
+
+CMakeFiles/res.dir/layers/layer2.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/layers/layer2.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/layers/layer2.cpp -o CMakeFiles/res.dir/layers/layer2.cpp.s
+
+CMakeFiles/res.dir/layers/layer2.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/layers/layer2.cpp.o.requires
+
+CMakeFiles/res.dir/layers/layer2.cpp.o.provides: CMakeFiles/res.dir/layers/layer2.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer2.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/layers/layer2.cpp.o.provides
+
+CMakeFiles/res.dir/layers/layer2.cpp.o.provides.build: CMakeFiles/res.dir/layers/layer2.cpp.o
+
+
+CMakeFiles/res.dir/layers/layer3.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/layers/layer3.cpp.o: layers/layer3.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/res.dir/layers/layer3.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/layers/layer3.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/layers/layer3.cpp
+
+CMakeFiles/res.dir/layers/layer3.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/layers/layer3.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/layers/layer3.cpp > CMakeFiles/res.dir/layers/layer3.cpp.i
+
+CMakeFiles/res.dir/layers/layer3.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/layers/layer3.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/layers/layer3.cpp -o CMakeFiles/res.dir/layers/layer3.cpp.s
+
+CMakeFiles/res.dir/layers/layer3.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/layers/layer3.cpp.o.requires
+
+CMakeFiles/res.dir/layers/layer3.cpp.o.provides: CMakeFiles/res.dir/layers/layer3.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/layers/layer3.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/layers/layer3.cpp.o.provides
+
+CMakeFiles/res.dir/layers/layer3.cpp.o.provides.build: CMakeFiles/res.dir/layers/layer3.cpp.o
+
+
+CMakeFiles/res.dir/util/file_util.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/util/file_util.cpp.o: util/file_util.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/res.dir/util/file_util.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/util/file_util.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/util/file_util.cpp
+
+CMakeFiles/res.dir/util/file_util.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/util/file_util.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/util/file_util.cpp > CMakeFiles/res.dir/util/file_util.cpp.i
+
+CMakeFiles/res.dir/util/file_util.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/util/file_util.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/util/file_util.cpp -o CMakeFiles/res.dir/util/file_util.cpp.s
+
+CMakeFiles/res.dir/util/file_util.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/util/file_util.cpp.o.requires
+
+CMakeFiles/res.dir/util/file_util.cpp.o.provides: CMakeFiles/res.dir/util/file_util.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/util/file_util.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/util/file_util.cpp.o.provides
+
+CMakeFiles/res.dir/util/file_util.cpp.o.provides.build: CMakeFiles/res.dir/util/file_util.cpp.o
+
+
+CMakeFiles/res.dir/util/mat_util.cpp.o: CMakeFiles/res.dir/flags.make
+CMakeFiles/res.dir/util/mat_util.cpp.o: util/mat_util.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/res.dir/util/mat_util.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/res.dir/util/mat_util.cpp.o -c /media/nikepupu/10D6122F101EC956/232B/util/mat_util.cpp
+
+CMakeFiles/res.dir/util/mat_util.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/res.dir/util/mat_util.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/nikepupu/10D6122F101EC956/232B/util/mat_util.cpp > CMakeFiles/res.dir/util/mat_util.cpp.i
+
+CMakeFiles/res.dir/util/mat_util.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/res.dir/util/mat_util.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/nikepupu/10D6122F101EC956/232B/util/mat_util.cpp -o CMakeFiles/res.dir/util/mat_util.cpp.s
+
+CMakeFiles/res.dir/util/mat_util.cpp.o.requires:
+
+.PHONY : CMakeFiles/res.dir/util/mat_util.cpp.o.requires
+
+CMakeFiles/res.dir/util/mat_util.cpp.o.provides: CMakeFiles/res.dir/util/mat_util.cpp.o.requires
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/util/mat_util.cpp.o.provides.build
+.PHONY : CMakeFiles/res.dir/util/mat_util.cpp.o.provides
+
+CMakeFiles/res.dir/util/mat_util.cpp.o.provides.build: CMakeFiles/res.dir/util/mat_util.cpp.o
+
+
 # Object files for target res
 res_OBJECTS = \
-"CMakeFiles/res.dir/main.cpp.o" \
 "CMakeFiles/res.dir/detector.cpp.o" \
-"CMakeFiles/res.dir/saot_inference_Config.cpp.o" \
+"CMakeFiles/res.dir/exponential_model.cpp.o" \
 "CMakeFiles/res.dir/filter.cpp.o" \
-"CMakeFiles/res.dir/misc.cpp.o"
+"CMakeFiles/res.dir/main.cpp.o" \
+"CMakeFiles/res.dir/misc.cpp.o" \
+"CMakeFiles/res.dir/saot_config.cpp.o" \
+"CMakeFiles/res.dir/saot_inference_Config.cpp.o" \
+"CMakeFiles/res.dir/template.cpp.o" \
+"CMakeFiles/res.dir/test.cpp.o" \
+"CMakeFiles/res.dir/layers/layer1.cpp.o" \
+"CMakeFiles/res.dir/layers/layer2.cpp.o" \
+"CMakeFiles/res.dir/layers/layer3.cpp.o" \
+"CMakeFiles/res.dir/util/file_util.cpp.o" \
+"CMakeFiles/res.dir/util/mat_util.cpp.o"
 
 # External object files for target res
 res_EXTERNAL_OBJECTS =
 
-res: CMakeFiles/res.dir/main.cpp.o
 res: CMakeFiles/res.dir/detector.cpp.o
-res: CMakeFiles/res.dir/saot_inference_Config.cpp.o
+res: CMakeFiles/res.dir/exponential_model.cpp.o
 res: CMakeFiles/res.dir/filter.cpp.o
+res: CMakeFiles/res.dir/main.cpp.o
 res: CMakeFiles/res.dir/misc.cpp.o
+res: CMakeFiles/res.dir/saot_config.cpp.o
+res: CMakeFiles/res.dir/saot_inference_Config.cpp.o
+res: CMakeFiles/res.dir/template.cpp.o
+res: CMakeFiles/res.dir/test.cpp.o
+res: CMakeFiles/res.dir/layers/layer1.cpp.o
+res: CMakeFiles/res.dir/layers/layer2.cpp.o
+res: CMakeFiles/res.dir/layers/layer3.cpp.o
+res: CMakeFiles/res.dir/util/file_util.cpp.o
+res: CMakeFiles/res.dir/util/mat_util.cpp.o
 res: CMakeFiles/res.dir/build.make
 res: /installation/OpenCV-/lib/libopencv_videostab.so.3.4.5
 res: /installation/OpenCV-/lib/libopencv_superres.so.3.4.5
@@ -253,7 +487,7 @@ res: /installation/OpenCV-/lib/libopencv_imgproc.so.3.4.5
 res: /installation/OpenCV-/lib/libopencv_flann.so.3.4.5
 res: /installation/OpenCV-/lib/libopencv_core.so.3.4.5
 res: CMakeFiles/res.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable res"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/nikepupu/10D6122F101EC956/232B/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable res"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/res.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -261,11 +495,20 @@ CMakeFiles/res.dir/build: res
 
 .PHONY : CMakeFiles/res.dir/build
 
-CMakeFiles/res.dir/requires: CMakeFiles/res.dir/main.cpp.o.requires
 CMakeFiles/res.dir/requires: CMakeFiles/res.dir/detector.cpp.o.requires
-CMakeFiles/res.dir/requires: CMakeFiles/res.dir/saot_inference_Config.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/exponential_model.cpp.o.requires
 CMakeFiles/res.dir/requires: CMakeFiles/res.dir/filter.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/main.cpp.o.requires
 CMakeFiles/res.dir/requires: CMakeFiles/res.dir/misc.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/saot_config.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/saot_inference_Config.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/template.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/test.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/layers/layer1.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/layers/layer2.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/layers/layer3.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/util/file_util.cpp.o.requires
+CMakeFiles/res.dir/requires: CMakeFiles/res.dir/util/mat_util.cpp.o.requires
 
 .PHONY : CMakeFiles/res.dir/requires
 
