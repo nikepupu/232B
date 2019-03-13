@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/exp2.dir/1d_sentence_exp.cpp.o  -o exp2 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_system.so 

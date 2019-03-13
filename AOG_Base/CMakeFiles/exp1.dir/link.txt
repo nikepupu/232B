@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/exp1.dir/grammar_example.cpp.o  -o exp1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_system.so 

@@ -11,6 +11,10 @@
 namespace AOG_LIB {
 namespace SAOT {
 
+void ExponentialModel::SetBackgroudnImageDir(const std::string& img_dir) {
+  img_dir_ = img_dir;
+}
+
 void ExponentialModel::Build() {
   std::vector<std::string> img_list;
   UTIL::GetFileList(img_list, img_dir_, img_ext_, /*fullpath=*/true);
@@ -35,7 +39,7 @@ void ExponentialModel::Build() {
     images[i] = images[i].rowRange(0, sizex).colRange(0, sizey);
   }
   // filtering background images
-  //BOOST_LOG_TRIVIAL(debug) << "Start filtering";
+  BOOST_LOG_TRIVIAL(debug) << "Start filtering";
   std::clock_t start_time = std::clock();
   MakeFilter(scale_filter_, num_orient_, all_filter, all_symbol);
   // half size of gabor
@@ -44,9 +48,9 @@ void ExponentialModel::Build() {
   MatCell_2<cv::Mat> filtered_images;
   ApplyFilterfft(config_, images, all_filter, filtered_images);
   double filter_time = (std::clock() - start_time) / CLOCKS_PER_SEC;
- // BOOST_LOG_TRIVIAL(debug) << "filtering time: " << filter_time << " seconds";
+  BOOST_LOG_TRIVIAL(debug) << "filtering time: " << filter_time << " seconds";
   // compute hisogram of q()
-  //BOOST_LOG_TRIVIAL(debug) << "Start histogramming";
+  BOOST_LOG_TRIVIAL(debug) << "Start histogramming";
   start_time = std::clock();
   int num_bins = static_cast<int>(floor(saturation_ / bin_size_) + 1);
   cv::Mat histog = cv::Mat::zeros(num_bins, 1, CV_64F);
@@ -54,7 +58,7 @@ void ExponentialModel::Build() {
   Histogram(filtered_images, config_, cv::Size(sizex, sizey), bin_size_,
             num_bins, histog);
   double hist_time = (std::clock() - start_time) / CLOCKS_PER_SEC;
-  //BOOST_LOG_TRIVIAL(debug) << "histogramming time: " << hist_time << " seconds";
+  BOOST_LOG_TRIVIAL(debug) << "histogramming time: " << hist_time << " seconds";
   // compute stored lambda, expectation, logZ
   stored_param = CreateMatCell1Dim<ExpParam>(num_stored_point_);
   cv::Mat r(num_bins, 1, CV_64F);
