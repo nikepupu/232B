@@ -45,6 +45,11 @@ int SAOT_Inference::size(std::vector<type> tmp)
 	return tmp.size();
 }
 
+std::vector<int> SAOT_Inference::size(MatCell_1<cv::Mat> src)
+{
+	return size(src[0]);
+}
+
 template <class type>
 std::vector<int> SAOT_Inference::size(std::vector<std::vector<type> > tmp)
 {
@@ -270,6 +275,8 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 
 	        std::vector<double> inRow= std::vector<double>(denseX.size() * denseY.size(), 0.0);
 	        std::vector<double> inCol= std::vector<double>(denseX.size() * denseY.size(), 0.0);
+	        std::vector<double> inO = inRow;
+	        std::vector<double> inS = inCol;
 	        for(auto y : denseY)
 	            for (auto x : denseX)
 	            {
@@ -282,19 +289,31 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 	        //////////////////////////////////////////////////////
 	        int tScale = 0, rScale = 1, cScale = 1; 
 	       
-	        std::vector<double> inO = inRow;
-	        std::vector<double> inS = inCol;
-
 
 	        std::vector<double> outRow, outCol;
 
 	        //////////////////////////////////////////////////////
 	        ////TemplateAffineTransform is not done
 	        ///////////////////////////////////////////////////
+	        std::vector<PartParam> in_comp, out_comp;
+	        for(int i = 0; i < inRow.size();i++)
+	        {
+	        	PartParam temp;
+	        	temp.row = inRow[i];
+	        	temp.col = inCol[i];
+	        	temp.ori = inO[i];
+	        	temp.scale = inS[i];
+	        	in_comp.push_back(temp);
+	        }
 
-	        // [outRow, outCol] = ...
-	        //     TemplateAffineTransform(tScale,rScale,cScale,
-	        //         actualPartRotation,inRow,inCol,inO,inS,numOrient);
+	        TemplateAffineTransform(in_comp, out_comp, tScale,rScale,cScale,
+	                 actualPartRotation, configs.num_orient);
+
+	        for(int i = 0; i < out_comp.size(); i++)
+	        {
+	        	outRow.push_back(out_comp[i].row);
+	        	outCol.push_back(out_comp[i].col);
+	        }
 	        
 			// crop the feature patch that is registered to the part template
 	        
@@ -303,11 +322,11 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 	        /// Some bug in CropInstance needs to be fixed
 	        /////////////////////////////////////////////////////
 
-			// CropInstance(configs , map_sum1_find[bestPartRes] , tmpCropped ,Fx,Fy,
-			// 	actualPartRotation,tScale,1,
-			// 	outRow.data(),outCol.data(),
-			// 	configs.num_orient,1,configs.partSizeX,configs.partSizeY
-			// 	);
+			CropInstance(configs , map_sum1_find[bestPartRes] , tmpCropped ,Fx,Fy,
+				actualPartRotation,tScale,1,
+				outRow.data(),outCol.data(),
+				configs.num_orient,1,configs.partSizeX,configs.partSizeY
+				);
 
 			for(int o = 0; o < configs.num_orient; o++)
 				morphedSUM1map[o](cv::Rect_<int>(configs.PartLocX[iPart], configs.PartLocX[iPart]+configs.partSizeX,
@@ -316,10 +335,10 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 			
 			// also crop the corresponding image patch (for each part)
 
-			// tmpCropped = mexc_CropInstance(ImageMultiResolution(bestPartRes),Fx,Fy,...
-			// 	actualPartRotation,tScale,1,...
-			// 	outRow.data(),outCol.data(),...
-			// 	1,1,partSizeX,partSizeY);
+			CropInstance(configs,ImageMultiResolution[bestPartRes],tmpCropped,Fx,Fy,
+				actualPartRotation,tScale,1,
+				outRow.data(),outCol.data(),
+				1,1,configs.partSizeX,configs.partSizeY);
 
 			morphedPatch(cv::Rect_<int>(configs.PartLocX[iPart], configs.PartLocX[iPart]+configs.partSizeX,
 				 configs.PartLocY[iPart], configs.PartLocY[iPart]+configs.partSizeY )) = tmpCropped[0];
@@ -405,10 +424,6 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 	            for(int y = configs.partSizeY-margin+1; y <= configs.partSizeY; y++)
 	            	yt.push_back(y);
 
-
-	            // for y = [1:margin partSizeY-margin+1:partSizeY]
-	            //     yt = [yy,ones(1,partSizeX)*y];
-
 	           
 	            for(int y:yt)
 	            {
@@ -430,24 +445,54 @@ void SAOT_Inference::TraceBack(SAOTConfig &configs)
 
 	            std::vector<double> tempVec  = yy-(double)floor(configs.partSizeY/2);
 	            memcpy(inCol.data, tempVec.data(), tempVec.size()*sizeof(double));
+
 	            int tScale=0,rScale=1,cScale=1;
 
-	            cv::Mat inO = cv::Mat::zeros(std::max(inRow.rows, inRow.cols), 1,CV_64F);
-	            cv::Mat inS = cv::Mat::zeros(std::max(inRow.rows, inRow.cols), 1,CV_64F);
+	            std::vector<PartParam> in_comp, out_comp;
+	            in_comp.clear();
+	            for(int i = 0; i <  inRow.cols; i++)
+	            {
+	            	PartParam temp;
+	            	temp.row = inRow.at<double>(0,i);
+	            	temp.col = inCol.at<double>(0,i);
+	            	temp.ori = 0;
+	            	temp.scale = 0;
+
+	            	in_comp.push_back(temp);
+	            }
+	            TemplateAffineTransform(in_comp, out_comp, tScale,rScale,cScale, actualPartRotation,configs.num_orient);
+	            
+	            std::vector<double> outRow, outCol;
+	            for(int i = 0; i < out_comp.size(); i++)
+	        	{
+	        		outRow.push_back(out_comp[i].row);
+	        		outCol.push_back(out_comp[i].col);
+	        	}
+
+	        	int sz[3]= {imageSizeAtBestObjectResolution[0],imageSizeAtBestObjectResolution[1], 3};
+	        	cv::Mat matchedBoundingBox(3,sz, CV_8UC(1), cv::Scalar::all(0));
+	        	
+	        	/////////////////////////////////////////////
+	        	//// this is interpolations should be nearest
+	        	//// need to update opencv version to fix this
+	        	//////////////////////////////////////////////
 
 
-	            // [outRow, outCol] = ...
-	            //     mexc_TemplateAffineTransform(tScale,rScale,cScale,...
-	            //         actualPartRotation,inRow,inCol,inO,inS,numOrient);
-	                
+	        	cv::resize(matchedBoundingBox,matchedBoundingBox, 
+				cv::Size(imageSizeAtBestObjectResolution[0],imageSizeAtBestObjectResolution[1] )) ;
 	            // //directly overwrite the corresponding pixels
-	            // matchedBoundingBox = imresize(matchedBoundingBox,size(ImageMultiResolution{bestPartRes}),'nearest');
-	            // for p = 1:length(outRow)
-	            //     x = floor(.5 + outRow(p) + Fx); y = floor(.5 + outCol(p) + Fy);
-	            //     if x > 0 && x <= size(matchedBoundingBox,1) && y > 0 && y <= size(matchedBoundingBox,2)
-	            //         matchedBoundingBox(x,y,:) = [1 .5 .3];
-	            //     end
-	            // end
+	            for(int p = 0; p < outRow.size(); p++)
+	            {
+	                int x = floor(.5 + outRow[p] + Fx); 
+	                int y = floor(.5 + outCol[p] + Fy);
+	                if(x > 0 && x <= size(matchedBoundingBox,1) && y > 0 && y <= size(matchedBoundingBox,2))
+	                {
+	                    matchedBoundingBox.at<double>(x,y,0) = 1;
+	                    matchedBoundingBox.at<double>(x,y,1) =.5;
+	                    matchedBoundingBox.at<double>(x,y,2) =.3;
+	                }
+
+	            }
 	            // matchedBoundingBox = imresize(matchedBoundingBox,size(ImageMultiResolution{bestRes}),'nearest');
 			} //if(showPartBoundingBox)
 		}// if showMatchedTemplate

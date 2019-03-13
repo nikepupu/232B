@@ -102,6 +102,9 @@ namespace SAOT{
 	template <class type>
 	int size(std::vector<type> tmp);
 
+
+	std::vector<int> size(MatCell_1<cv::Mat>);
+
 	
 	std::vector<int> size(cv::Mat tmp);
 
@@ -171,7 +174,7 @@ namespace SAOT{
 	MatCell_2<cv::Mat> map_sum1_find;
 	MatCell_1<cv::Mat> SUM1map;
 
-	MatCell_1<cv::Mat> ImageMultiResolution;
+	MatCell_2<cv::Mat> ImageMultiResolution;
 
 
 
