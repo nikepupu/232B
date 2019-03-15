@@ -13,6 +13,7 @@ namespace AOG_LIB {
 namespace SAOT {
 
 struct SAOTConfig {
+  
   std::string category;
   std::string img_dir;
   std::string img_ext;
@@ -47,7 +48,9 @@ struct SAOTConfig {
   double scale_filter;
   double bin_size;
   double saturation;
+
   int num_stored_point;  /* number of stored points of lambda in exponential model */
+
   int numStoredPoint; /* deprecated*/
   int num_iteration;
   int numCandPart;

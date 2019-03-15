@@ -159,8 +159,10 @@ bool LoadConfigFile(const std::string &filename, SAOTConfig &config) {
   int _rotate_scale = static_cast<int>(fs["obj_rotate"]["scale"]);
   config.num_rotate = _rotate_end - _rotate_start + 1;
   config.rotation_range.resize(config.num_rotate);
+  
   for (int i = 0; i < config.num_part_rotation; i++)
     config.rotation_range[i] = (i + _rotate_start) * _rotate_scale;
+
 
   config.startx = 1; config.starty = 1;
   config.endx = config.startx + config.template_size[0] - 1;
@@ -186,6 +188,7 @@ bool LoadConfigFile(const std::string &filename, SAOTConfig &config) {
   ///// if we don't need some parts.
   //////////////////////////////////////////////////////
   config.selectedPart.create(total,1, CV_64F);
+
   for(int i = 0; i < total; i++ )
     config.selectedPart.at<double>(i,0)  = i+1;
 

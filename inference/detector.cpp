@@ -14,6 +14,8 @@
 #include <string>
 #include <fstream>
 
+#define PI 3.1415926
+
 namespace AOG_LIB {
 namespace SAOT {
 
@@ -101,9 +103,12 @@ void SAOT_Inference::LoadImageAndFeature()
     	ImageMultiResolution[i].convertTo(ImageMultiResolution[i], CV_32F);
     }
     //std::cout << ImageMultiResolution[0] <<std::endl;
+
     cv::Mat temp;
+
     //ImageMultiResolution[0].convertTo(temp,  CV_8U);
     //std::cout << temp<<std::endl; 
+
     map_sum1_find.resize(boost::extents[ImageMultiResolution.shape()[0]][config.allFilter.shape()[0]]);
     ApplyFilterfft(config, ImageMultiResolution, config.allFilter, map_sum1_find);
 
@@ -124,6 +129,112 @@ void SAOT_Inference::LoadImageAndFeature()
     ComputeMAX1(config,map_sum1_find, MAX1map, M1Trace,
                  M1RowShift, M1ColShift, M1OriShifted);
     
+
+
+}
+
+void SAOT_Inference::Compute()
+{
+	SUM2map.resize(extents[config.num_part_rotation][config.numCandPart][config.num_resolution]);
+
+
+	MatCell_2< std::vector<template_filter> > S2T = CreateMatCell2Dim(config.num_part_rotation, config.numCandPart);
+	
+	//compute SUM2 maps for non-overlapping parts
+	for(int iPart = 0; iPart < config.numCandPart; iPart++)
+	{
+		for(int r = 0; r < config.part_rotation_range.size(); r++)
+		{
+			template_filter temp;
+			S2T[iPart][r].row =  config.allSelectedx[iPart][r];
+			S2T[iPart][r].col =  config.allSelectedy[iPart][r];
+			S2T[iPart][r].ori =  config.allSelectedOrient[iPart][r];
+			S2T[iPart][r].scale =  cv::Mat::zeros(config.allSelectedx[iPart][r].nrows,1,CV64F);
+			S2T[iPart][r].lambda =  config.selectedlambda[iPart];
+			S2T[iPart][r].logZ = 	config.selectedLogZ[iPart];
+		}
+	}
+
+		////////////////////////////////////////////////////
+		///// this needs to be fix until update from yifei xu
+		/////////////////////////////////////////////////////
+		ComputeSUM2(config, MAX1map,  S2T, SUM2map);
+
+		//reshape?
+	
+	// compute SUM2 maps for overlapping parts
+	largerSUM2map.resize(extents[config.num_part_rotation][config.numCandPart][config.num_resolution]);
+
+	MatCell_2< std::vector<template_filter> > largerS2T = CreateMatCell2Dim(config.num_part_rotation, config.numCandPart);
+	for(int iPart = 0; iPart < config.numCandPart; iPart++)
+	{
+		for(int r = 1; r < config.part_rotation_range.size(); r++)
+		{
+			template_filter temp;
+			largerS2T[iPart][r].row =  config.largerAllSelectedx[iPart][r];
+			largerS2T[iPart][r].col =  config.largerAllSelectedy[iPart][r];
+			largerS2T[iPart][r].ori =  config.largerAllSelectedOrient[iPart][r];
+			largerS2T[iPart][r].scale =  cv::Mat::zeros(config.largerAllSelectedx[iPart][r].nrows,1,CV64F);
+			largerS2T[iPart][r].lambda =  config.largerSelectedlambda[iPart];
+			largerS2T[iPart][r].logZ = 	config.largerSelectedLogZ[iPart];
+		}
+	}
+
+	////////////////////////////////////////////////////
+	///// this needs to be fix until update from yifei xu
+	/////////////////////////////////////////////////////
+	ComputeSUM2(config,MAX1map,  largerS2T, SUM2map);
+	//reshape?
+	
+
+
+	////////////////////////////////////////////////////////
+	MatCell_2<cv::Mat> templateAffinityMatrix = CreateMatCell2Dim(config.num_part_rotation, config.numCandPart);
+	MatCell_2<std::vector<int> > templateAffinityVec = CreateMatCell2Dim(config.num_part_rotation, config.numCandPart);
+
+	for(int iPart = 0; iPart < config.numCandPart; iPart++)
+	{
+		for(int r1 = 0; r1 < config.part_rotation_range.size(); r1++)
+		{
+			double angle1  = PI / config.num_orient * part_rotation_range[r1];
+			//templateAffinityMatrix[r1][iPart];
+			int jPart = iPart;
+			for(int r2 = 0; r2 < config.part_rotation_range.size(); r2++)
+			{
+				double angle2 = PI/config.num_orient*config.part_rotation_range[r2];
+				if( pow((sin(angle1) - sin(angle2)),2) + pow((cos(angle1) - cos(angle2)),2) <= config.min_rotation_dif )
+				{
+					templateAffinityVec[r1][iPart].push_back(r2+(jPart-1)*numPartRotate-1);
+				}
+
+				templateAffinityMatrix[r1][iPart] = cv::Mat(1,templateAffinityVec[r1][iPart].size(), CV_32S);
+				memcpy(templateAffinityMatrix[r1][iPart].data, templateAffinityVec[r1][iPart].data(), templateAffinityVec[r1][iPart].size()*sizeof(int));
+
+			}
+
+		}
+	}
+
+
+
+
+	largerMAX2map.resize(boost::extents[SUM2map.shape()[0]][SUM2map.shape()[1]][SUM2map.shape()[2]]);
+	largerMAX2LocTrace.resize(boost::extents[SUM2map.shape()[0]][SUM2map.shape()[1]][SUM2map.shape()[2]]);
+	largerMAX2TransformTrace.resize(boost::extents[SUM2map.shape()[0]][SUM2map.shape()[1]][SUM2map.shape()[2]]);
+
+
+	
+	for(int iRes = 0; iRes < config.num_resolution; iRes++)
+	{
+		subsample_M2 = 1;
+		ComputeMAX2(config, largerSUM2map, templateAffinityMatrix,largerMAX2map, largerMAX2LocTrace,largerMAX2TransformTrace);
+		//? need to consult yifei about how to use this
+	}
+
+	
+	MatCell_3<cv::Mat> tmpMAX3map = CreateMatCell3Dim(SUM2map.shape()[0]][SUM2map.shape()[1]][SUM2map.shape()[2]]);
+	FakeMAX2(config, SUM2map, largerMAX2LocTrace, largerMAX2TransformTrace, templateAffinityMatrix);
+	//?again need to talk to yifei
 
 
 }
@@ -214,6 +325,7 @@ cv::Mat SAOT_Inference::drawGaborSymbol(cv::Mat im, MatCell_1<cv::Mat> &allsymbo
 	int scaleIndex, double intensity )
 {
 	int h = floor( (size(allsymbol[(scaleIndex-1)*nGaborOri + orientationIndex], 1)-1)/2 );
+
 	for(int r = row-h; r <= row+h; r++)
 	{
 		if(r <0 || r > size(im,1))
@@ -225,7 +337,8 @@ cv::Mat SAOT_Inference::drawGaborSymbol(cv::Mat im, MatCell_1<cv::Mat> &allsymbo
 				continue;
 
 			double val = intensity * allsymbol[(scaleIndex-1)*nGaborOri + orientationIndex].at<double>(r-row+h+1,c-col+h+1);
-			if(val > im.at<double>(r,c) )
+
+			if( val > im.at<double>(r,c) )
 				im.at<double>(r,c) = val;
 		}
 

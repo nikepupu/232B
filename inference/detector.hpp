@@ -142,12 +142,13 @@ namespace SAOT{
 	mat find(std::vector<type> tmp);
 
 	cv::Mat displayMatchedTemplate(std::vector<int> &latticeSize, std::vector<int> &selectedRow, 
-	 std::vector<int> &selectedCol, std::vector<int> &selectedO, std::vector<int> &selectedS, 
-	 std::vector<int> &selectedMean, MatCell_1<cv::Mat> &allsymbol, int &nGaborOri);
+		std::vector<int> &selectedCol, std::vector<int> &selectedO, std::vector<int> &selectedS, 
+		std::vector<int> &selectedMean, MatCell_1<cv::Mat> &allsymbol, int &nGaborOri);
 
 	cv::Mat drawGaborSymbol(cv::Mat im, MatCell_1<cv::Mat> &allsymbol, int row, int col, int orientationIndex, int nGaborOri, 
-	int scaleIndex, double intensity );
+			int scaleIndex, double intensity );
 
+	void Compute()
 
 
 	/////////////
@@ -171,12 +172,9 @@ namespace SAOT{
 
 
 	int bestRotInd;
-
 	std::vector<int> imageSizeAtBestObjectResolution;
-
 	MatCell_2<cv::Mat> map_sum1_find;
 	MatCell_1<cv::Mat> SUM1map;
-
 	MatCell_1<cv::Mat> ImageMultiResolution;
 
 
@@ -190,6 +188,7 @@ namespace SAOT{
 	int therey;
 	int bestRes;
 
+
 	std::vector<double> gaborResponses;
 	std::vector<double> partScores;
 
@@ -197,25 +196,22 @@ namespace SAOT{
 	cv::Mat M1ColShift;
 	cv::Mat M1OriShifted;
 	MatCell_1<cv::Mat> morphedSUM1map;
-
 	MatCell_2<cv::Mat> MAX1map;
-
+	MatCell_2<cv::Mat> largerSUM2map;
 
 	MatCell_2<cv::Mat> M1Trace;
 
 	MatCell_3<cv::Mat> MAX2map;
+	MatCell_3<cv::Mat> SUM2map;
 	MatCell_3<cv::Mat> MAX2ResolutionTrace;
 	MatCell_3<cv::Mat> largerMAX2LocTrace;
 	MatCell_3<cv::Mat> largerMAX2TransformTrace;
-
-
+	MatCell_3<cv::Mat> largerMAX2map;
 
 
 	cv::Mat morphedPatch;
-
 	cv::Mat M2RowColShift;
 	cv::Mat matchedSym;
-
 
 
 	std::vector<std::vector<int> > partAbsoluteLocation;
@@ -224,8 +220,6 @@ namespace SAOT{
 	std::vector<std::vector<int> > gaborAbsoluteLocation;
 	std::vector<int > gaborAbsoluteRotation;
 	std::vector<int> gaborAbsoluteResolution;
-
-
 
 	//////////// configuration file variables
 
