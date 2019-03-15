@@ -106,7 +106,41 @@ namespace SAOT{
 	int size(std::vector<type> tmp);
 
 
-	std::vector<int> size(MatCell_1<cv::Mat>);
+	std::vector<int> size(MatCell_1<cv::Mat> tmp)
+
+	template <class type>
+	std::vector<int> size(MatCell_2<type> tmp)
+	{
+		vector<int> res;
+		res.emplace_back(tmp.shape()[0]);
+		res.emplace_back(tmp.shape()[1]);
+
+		return res;
+	}
+	}
+	std::vector<int> size(MatCell_3<cv::Mat> tmp);
+
+	template <class type>
+	int size(MatCell_2<type> tmp, int dim);
+	{
+		assert(dim==1 || dim == 2);
+		if(dim == 1)
+			return tmp.shape()[0];
+		else return tmp.shape()[1];
+
+	}
+
+	int size(MatCell_3<cv::Mat>, int dim);
+	{
+		assert(dim==1 || dim == 2 || dim == 3);
+		if(dim == 1)
+			return tmp.shape()[0];
+		else  if (dim == 2)
+			return tmp.shape()[1];
+		else 
+			return tmp.shape()[2];
+
+	}
 
 	
 	std::vector<int> size(cv::Mat tmp);

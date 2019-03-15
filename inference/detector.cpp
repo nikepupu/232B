@@ -232,9 +232,53 @@ void SAOT_Inference::Compute()
 	}
 
 	
-	MatCell_3<cv::Mat> tmpMAX3map = CreateMatCell3Dim(SUM2map.shape()[0]][SUM2map.shape()[1]][SUM2map.shape()[2]]);
-	FakeMAX2(config, SUM2map, largerMAX2LocTrace, largerMAX2TransformTrace, templateAffinityMatrix);
+	MatCell_3<cv::Mat> tmpMAX2map = CreateMatCell3Dim(SUM2map.shape()[0]][SUM2map.shape()[1]][SUM2map.shape()[2]]);
+	MatCell_3<cv::Mat> tmpLargerMAX2map = CreateMatCell3Dim(SUM2map.shape()[0]][SUM2map.shape()[1]][SUM2map.shape()[2]]);
+	FakeMAX2(config, SUM2map, largerMAX2LocTrace, largerMAX2TransformTrace, tmpMAX2map);
 	//?again need to talk to yifei
+	MAX2map = tmpMAX2map;
+	tmpLargerMAX2map = largerMAX2map;
+
+	MAX2ResolutionTrace.resize(boost::extents[largerMAX2map.shape()[0]][largerMAX2map.shape()[1]][largerMAX2map.shape()[2]]);
+	for(int iRes = 0; iRes < config.num_resolution; iRes++)
+	{
+		vector<int> current_size;
+		current_size = size(MAX2map[0][0][iRes]);
+		for(int j = 0; j < size(MAX2map,1); j++)
+			for(int k = 0; k < size(MAX2map,2);k++)
+			{
+				cv::Mat map = -1e10* cv::Mat::ones(current_size[0], current_size[1], CV_32F);
+				MAX2ResolutionTrace[j][k][iRes] = -1 * ones(current_size[0], current_size[1], CV_32F);
+				for(int jRes = 0; jRes < config.num_resolution; jRes++ )
+				{
+					if( abs(jRes-iRes) <= config.resolution_shift_limit )
+					{
+						cv::Mat<int> ref = largerMAX2map[j][k][jRes];
+						cv::resize(ref, ref, cv::Size(current_size[0], current_size[1]), cv::INTER_NEAREST);
+						cv::Mat ind<int> = (ref > map)/255;
+						for(int m = 0; m < map.rows; m++)
+						{
+							for(int n = 0; n < map.cols; n++)
+							{
+								map.at<double>(m,n) = ref.at<double>(m,n);
+
+							}
+						}
+						cv::Mat tocopy = tmpMAX2map[j][k][jRes];
+						cv::resize(tocopy, tocopy, cv::Size(current_size[0], current_size[1]), cv::INTER_NEAREST);
+						for(int m = 0; m < map.rows; m++)
+						{
+							for(int n = 0; n < map.cols; n++)
+							{
+								MAX2map[j][k][jRes].at<double>(m,n) = tocopy.at<double>(m,n);
+								MAX2ResolutionTrace[j][k][iRes].at<double>(m,n) = jRes-1;
+							}
+						}
+
+					}
+				}
+			}
+	}
 
 
 }
