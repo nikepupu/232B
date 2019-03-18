@@ -39,10 +39,32 @@ void LoadMatCell2(std::string filename, MatCell_2<cv::Mat> & var)
     for(int j = 0; j < sz2; j++)
     {
       ifs >> sub_size1 >> sub_size2;
-      var[i][j].create(sub_size1, sub_size2, CV_64F);
+      if(filename == "./inference/allFilter.txt")
+        var[i][j].create(sub_size1, sub_size2, CV_64FC2);
+      else
+        var[i][j].create(sub_size1, sub_size2, CV_64F);
+
+      double temp, temp2;
       for(int m = 0; m < sub_size1; m++)
         for(int n = 0; n < sub_size2; n++)
-          ifs >> var[i][j].at<double>(m,n);
+        {
+
+          std::complex<double> c;
+          ifs >> c;
+          temp =  c.real();
+          temp2 = c.imag();
+
+          if(filename == "./inference/allFilter.txt")
+          {
+             std::cout << c <<std::endl;
+            var[i][j].at<cv::Vec2d>(m,n)[0] = temp;
+            var[i][j].at<cv::Vec2d>(m,n)[1] = temp2;
+          }
+          else
+          {
+            var[i][j].at<double>(m,n)  = temp;
+          }
+        }
     }
 
   ifs.close();
@@ -68,10 +90,32 @@ void LoadMatCell1(std::string filename, MatCell_1<cv::Mat> & var)
   for(int i = 0; i < sz1; i++)
     {
       ifs >> sub_size1 >> sub_size2;
-      var[i].create(sub_size1, sub_size2, CV_64F);
+      if(filename == "./inference/allFilter.txt")
+        var[i].create(sub_size1, sub_size2, CV_64FC2);
+      else
+        var[i].create(sub_size1, sub_size2, CV_64F);
+
+      double temp, temp2;
       for(int m = 0; m < sub_size1; m++)
         for(int n = 0; n < sub_size2; n++)
-          ifs >> var[i].at<double>(m,n);
+        {
+          std::complex<double> c;
+          ifs >> c;
+          temp =  c.real();
+          temp2 = c.imag();
+
+          if(filename == "./inference/allFilter.txt")
+          {
+            std::cout << c <<std::endl;
+            var[i].at<cv::Vec2d>(m,n)[0] = temp;
+            var[i].at<cv::Vec2d>(m,n)[1] = temp2;
+          }
+          else
+          {
+            var[i].at<double>(m,n)  = temp;
+          }
+
+        }
     }
 
   ifs.close();

@@ -106,22 +106,22 @@ namespace SAOT{
 	int size(std::vector<type> tmp);
 
 
-	std::vector<int> size(MatCell_1<cv::Mat> tmp)
+	std::vector<int> size(MatCell_1<cv::Mat> tmp);
 
 	template <class type>
 	std::vector<int> size(MatCell_2<type> tmp)
 	{
-		vector<int> res;
+		std::vector<int> res;
 		res.emplace_back(tmp.shape()[0]);
 		res.emplace_back(tmp.shape()[1]);
 
 		return res;
 	}
-	}
-	std::vector<int> size(MatCell_3<cv::Mat> tmp);
+	
+
 
 	template <class type>
-	int size(MatCell_2<type> tmp, int dim);
+	int size(MatCell_2<type> tmp, int dim)
 	{
 		assert(dim==1 || dim == 2);
 		if(dim == 1)
@@ -130,7 +130,7 @@ namespace SAOT{
 
 	}
 
-	int size(MatCell_3<cv::Mat>, int dim);
+	int size(MatCell_3<cv::Mat> tmp, int dim)
 	{
 		assert(dim==1 || dim == 2 || dim == 3);
 		if(dim == 1)
@@ -182,7 +182,7 @@ namespace SAOT{
 	cv::Mat drawGaborSymbol(cv::Mat im, MatCell_1<cv::Mat> &allsymbol, int row, int col, int orientationIndex, int nGaborOri, 
 			int scaleIndex, double intensity );
 
-	void Compute()
+	void Compute();
 
 
 	/////////////

@@ -107,22 +107,28 @@ void ApplyFilterfft(const SAOTConfig config, const MatCell_1<cv::Mat> &images,
   int num_images = images.shape()[0];
   int num_filters = filters.shape()[0];
   int h = (filters[0].rows - 1) / 2;
-
+  //CreateMatCell2Dim<cv::Mat>(filtered_images, num_images, num_filters);
   for (int i = 0; i < num_images; i++) {
     double tot = 0.0;
     int sx = images[i].rows, sy = images[i].cols;
-    cv::Mat fftI;
-    cv::copyMakeBorder(images[i], fftI, h, h, h, h, cv::BORDER_CONSTANT, 0);
+    cv::Mat paddedI, fftI;
+    cv::copyMakeBorder(images[i], paddedI, 0, h + h, 0, h + h,
+                       cv::BORDER_CONSTANT, 0);
+    cv::Mat complexI[] = {cv::Mat_<double>(paddedI),
+                          cv::Mat::zeros(paddedI.size(), CV_64F)};
+    cv::merge(complexI, 2, fftI);
     cv::dft(fftI, fftI);
     MatCell_1<cv::Mat> filtered_results =
         CreateMatCell1Dim<cv::Mat>(num_filters);
     for (int j = 0; j < num_filters; j++) {
       cv::Mat out;
-      cv::copyMakeBorder(filters[j], out, h, h, h, h, cv::BORDER_CONSTANT, 0);
-      out.convertTo(out, CV_32F);
+      cv::copyMakeBorder(filters[j], out, 0, sx + h + h - filters[j].rows, 0,
+                         sy + h + h - filters[j].cols, cv::BORDER_CONSTANT, 0);
+      cv::dft(out, out);
+      out = fftI.mul(out);
       cv::dft(out, out, cv::DFT_INVERSE);
       cv::Mat filtered = out.rowRange(h, h + sx).colRange(h, h + sy);
-      //Compute local energy
+      //  Compute local energy
       cv::Mat energy = cv::abs(filtered);
       energy.rowRange(0, h).setTo(cv::Scalar(0.0));
       energy.rowRange(sx - h, sx).setTo(cv::Scalar(0.0));

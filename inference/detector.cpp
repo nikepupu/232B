@@ -102,7 +102,8 @@ void SAOT_Inference::LoadImageAndFeature()
     	cv::resize(I,ImageMultiResolution[i], cv::Size(), resolution, resolution,cv::INTER_NEAREST);
     	ImageMultiResolution[i].convertTo(ImageMultiResolution[i], CV_32F);
     }
-    //std::cout << ImageMultiResolution[0] <<std::endl;
+
+    // std::cout << ImageMultiResolution[0] <<std::endl;
 
     cv::Mat temp;
 
@@ -110,7 +111,8 @@ void SAOT_Inference::LoadImageAndFeature()
     //std::cout << temp<<std::endl; 
 
     map_sum1_find.resize(boost::extents[ImageMultiResolution.shape()[0]][config.allFilter.shape()[0]]);
-    ApplyFilterfft(config, ImageMultiResolution, config.allFilter, map_sum1_find);
+    std::cout << config.allFilter[0] << std::endl;
+    //ApplyFilterfft(config, ImageMultiResolution, config.allFilter, map_sum1_find);
 
     Sigmoid(config, map_sum1_find);
 
@@ -126,8 +128,8 @@ void SAOT_Inference::LoadImageAndFeature()
     M1Trace.resize(boost::extents[map_sum1_find.shape()[0]][map_sum1_find.shape()[1]]);
 
     
-    ComputeMAX1(config,map_sum1_find, MAX1map, M1Trace,
-                 M1RowShift, M1ColShift, M1OriShifted);
+    // ComputeMAX1(config,map_sum1_find, MAX1map, M1Trace,
+    //              M1RowShift, M1ColShift, M1OriShifted);
     
 
 
@@ -162,7 +164,7 @@ void SAOT_Inference::Compute()
 
 		//reshape?
 	
-	// compute SUM2 maps for overlapping parts
+	compute SUM2 maps for overlapping parts
 	largerSUM2map.resize(extents[config.num_part_rotation][config.numCandPart][config.num_resolution]);
 
 	MatCell_2< std::vector<template_filter> > largerS2T = CreateMatCell2Dim(config.num_part_rotation, config.numCandPart);
@@ -280,6 +282,82 @@ void SAOT_Inference::Compute()
 			}
 	}
 
+	/////////////////////////////// locate the object
+	double MAAX3 = 1e-10, bestS3Loc = -1, bestRes = 0, bestRot = 0;
+	MatCell_2< std::vector<template_filter> > S3T = CreateMatCell2Dim(config.num_part_rotation, 1);
+	for(int r = 0; r < config.part_rotation_range.size(); r++)
+	{
+		double rot = config.part_rotation_range[r];
+		cv::Mat MAX2Score(1, config.num_resolution, 0);
+		cv::Fx(1, config.num_resolution, 0);
+		cv::Fy(1, config.num_resolution, 0);
+
+		// compute SUM3 maps
+		/// need to debug here 
+		selectedTransform = cv::Mat(config.selectedPart.nrows,1,CV_64F);
+		for(int j = 0; j <selectedPart.nrows; j++)
+		{
+			selectedTransform.at<double>(j,0) = find( config.allS3SelectedOri.at<int>(r,j) == config.part_rotation_range );
+		}
+
+		template_filter temp;
+		S3T[r][0].row =  (floor(.5+allS3SelectedRow[r][config.selectedPart]/config.subsample_M2/config.subsample_S2));
+		for(int i = 0; i < config.selectedPart.nrows; i++)
+			S3T[r][0].row.push_back(floor(.5+allS3SelectedRow[r].at<double>(i,0)/config.subsample_M2/config.subsample_S2));
+
+
+		for(int i = 0; i < config.selectedPart.nrows; i++)
+			S3T[r][0].col.push_back(floor(.5+allS3SelectedCol[r].at<double>(i,0)/config.subsample_M2/config.subsample_S2));
+
+
+		S3T[r][0].ori =  config.allSelectedOrient[iPart][r];
+		for(int i = 0; i < config.selectedPart.nrows; i++)
+			S3T[r][0].Ind.push_back(config.slectedPart.at<double>(i,0)-1);
+
+		//S3T[r][0].transformInd =  cv::Mat::zeros(config.allSelectedx[iPart][r].nrows,1,CV64F);
+		for(int i = 0; i < selectedTransform.nrows; i++)
+			S3T[r][0].transformInd.push_back(selectedTransform.at<double>(i,0)-1);
+
+
+		for(int i = 0; i < config.selectedPart.nrows; i++)
+			S3T[r][0].lambda.push_back(1);
+
+		for(int i = 0; i < config.selectedPart.nrows; i++)
+			S3T[r][0].logZ.push_back(0);
+
+
+	}
+
+	 SUM3Map = CreateMatCell3Dim(config.num_resolution, 1);
+	 for(int iRes=0; iRes < config.num_resolution; iRes++)
+	 {
+	 	tmpM2 = MAX2map[boost::indices[boost::range(0,MAX2map.shape()[0])][boost::range(0,MAX2map.shape()[1])][iRes]];
+	 	computeSum3()
+	 	// nned to finish this part line 246-252 matlab
+
+
+	 }
+
+int bestRotInd = find(bestRot== config.rotationRange);
+int therey = ceil(bestS3Loc/size(SUM3map[bestRes],1));
+int therex = bestS3Loc - (therey-1) * size(SUM3map[bestRes],1);
+
+objLocation[0] =  floor((therex+.5)*subsample_S2);
+objLocation[1] = floor((therey+.5)*subsample_S2);
+
+objRotation = bestRot;
+
+objResolution = bestRes
+
+
+// copy the detected path (at object level)
+	if(doCropBackImage)
+	{
+		double denseX = -floor(sizeTemplatex/2) + (1:sizeTemplatex);
+		double denseY = -floor(sizeTemplatey/2) + (1:sizeTemplatey);
+		count = 0;
+
+	}
 
 }
 
