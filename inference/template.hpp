@@ -1,10 +1,10 @@
 #ifndef SAOT_TEMPLATE_HPP_
 #define SAOT_TEMPLATE_HPP_
 
+#include "util/meta_type.hpp"
 #include <opencv2/core/core.hpp>
 #include <string>
 #include <vector>
-#include "util/meta_type.hpp"
 #include "saot_config.hpp"
 #include "exponential_model.hpp"
 
@@ -54,8 +54,9 @@ class Template {
   MatCell_1<std::vector<BasisParam> > selected_params_, larger_selected_params_;
   MatCell_2<std::vector<BasisParam> > all_selected_params_,
       larger_all_selected_params_;
-  MatCell_1<cv::Mat> sum1_map_learn0_, deformed_template0_;
+  MatCell_1<cv::Mat> deformed_template0_;
   MatCell_1<cv::Mat> common_template_, deformed_template_;
+  MatCell_2<cv::Mat> sum1_map_learn0_;
   std::vector<PartParam> S3_selected_parts_;
   std::vector<int> part_on_off_;
   MatCell_1<std::vector<PartParam> > all_S3_selected_parts_;

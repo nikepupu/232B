@@ -13,9 +13,9 @@ namespace SAOT {
 /**
  * \author Zilong Zheng
 */
-void GaborFilter(int scale, int orient, cv::Mat &filter, cv::Mat &symbol);
+void GaborFilter(double scale, int orient, cv::Mat &filter, cv::Mat &symbol);
 
-void MakeFilter(int scale, int num_orient, MatCell_1<cv::Mat> &all_filter,
+void MakeFilter(double scale, int num_orient, MatCell_1<cv::Mat> &all_filter,
                 MatCell_1<cv::Mat> &all_symbol);
 
 // Compute inhibition map among filters

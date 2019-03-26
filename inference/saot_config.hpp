@@ -15,20 +15,22 @@ namespace SAOT {
 struct SAOTConfig {
   
   std::string category;
-  std::string img_dir;
-  std::string img_ext;
+  std::string img_dir="./inference/positiveImage";
+  std::string img_ext=".jpg";
   std::string output_dir;
-  std::string bkg_img_dir;
+  std::string bkg_img_dir = "./inference/negativeImage";
   double resize_factor;
   int num_resolution;
   int original_resolution;
   int template_size[2], part_size[2];
-  std::vector<int> part_rotation_range;
+
+  int *part_rotation_range;
+  
   int num_part_rotation;
   int max_part_relative_rotation;
   int resolution_shift_limit;
   double min_rotation_dif;
-  std::vector<int> rotation_range;
+  int* rotation_range;
   int num_rotate;
   int num_element;
   double location_perturb_fraction;
@@ -48,9 +50,7 @@ struct SAOTConfig {
   double scale_filter;
   double bin_size;
   double saturation;
-
   int num_stored_point;  /* number of stored points of lambda in exponential model */
-
   int numStoredPoint; /* deprecated*/
   int num_iteration;
   int numCandPart;

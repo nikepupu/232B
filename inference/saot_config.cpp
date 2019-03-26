@@ -142,9 +142,7 @@ void LoadMat(std::string filename , cv::Mat & var)
 }
 
 bool LoadConfigFile(const std::string &filename, SAOTConfig &config) {
-  std::cout<<"start Load Config Files"<<std::endl;
-  std::cout << GetCurrentWorkingDir() << std::endl;
-  cv::FileStorage fs;
+ cv::FileStorage fs;
   fs.open(filename, cv::FileStorage::READ);
   if (!fs.isOpened()) {
     BOOST_LOG_TRIVIAL(error) << boost::format("File %s not exist") % filename;
@@ -156,21 +154,48 @@ bool LoadConfigFile(const std::string &filename, SAOTConfig &config) {
   config.resize_factor = static_cast<double>(fs["resize_factor"]);
   config.template_size[0] = static_cast<int>(fs["template_size"]["x"]);
   config.template_size[1] = static_cast<int>(fs["template_size"]["y"]);
-  
-  config.epsilon = static_cast<double>(fs["epsilon"]);
 
+  config.epsilon = static_cast<double>(fs["epsilon"]);
+  config.scale_filter = static_cast<double>(fs["scale_filter"]);
   config.num_orient = static_cast<int>(fs["num_orient"]);
+  config.saturation = static_cast<double>(fs["saturation"]);
+  config.bin_size = static_cast<double>(fs["bin_size"]);
+  config.num_stored_point = static_cast<int>(fs["num_stored_point"]);
+
+  config.half_filter_size = config.num_orient / 2;
+
+  config.local_half_x = floor(30 * config.scale_filter + 0.5);
+  config.local_half_y = floor(30 * config.scale_filter + 0.5);
+
+  config.original_resolution = static_cast<int>(fs["original_resolution"]);
+
+  config.num_iteration = static_cast<int>(fs["num_iteration"]);
+
   config.orient_shift_limit = static_cast<int>(fs["orient_shift_limit"]);
   config.num_iteration = static_cast<int>(fs["num_iteration"]);
 
   config.part_size[0] = config.template_size[0] / 2;
   config.part_size[1] = config.template_size[1] / 2;
 
+  config.num_element = static_cast<int>(fs["num_element"]);
+
+  config.startx = static_cast<int>(fs["startx"]);
+  config.starty = static_cast<int>(fs["starty"]);
+  config.endx = config.startx + config.template_size[0];
+  config.endy = config.starty + config.template_size[1];
+  config.subsample_S2 = static_cast<int>(fs["subsample_S2"]);
+  config.subsample_M2 = static_cast<int>(fs["subsample_M2"]);
+  config.subsample = static_cast<int>(fs["subsample"]);
+
   // [Deprecated] used template.part_loc_x0 and template.part_loc_y0 instead
-  std::vector<int>partloc_x0 = std::vector<int>();
-  std::vector<int>partloc_y0 = std::vector<int>();
-  UTIL::MatlabColonExpression(0, config.part_size[0], config.template_size[0] - config.part_size[0] + 1, partloc_x0);
-  UTIL::MatlabColonExpression(0, config.part_size[0], config.template_size[0] - config.part_size[0] + 1, partloc_x0);
+  std::vector<int> partloc_x0 = std::vector<int>();
+  std::vector<int> partloc_y0 = std::vector<int>();
+  UTIL::MatlabColonExpression(0, config.part_size[0],
+                              config.template_size[0] - config.part_size[0] + 1,
+                              partloc_x0);
+  UTIL::MatlabColonExpression(0, config.part_size[1],
+                              config.template_size[1] - config.part_size[1] + 1,
+                              partloc_y0);
   config.numCandPart = partloc_x0.size() * partloc_y0.size();
 
   config.part_loc_x = std::vector<int>();
@@ -183,34 +208,41 @@ bool LoadConfigFile(const std::string &filename, SAOTConfig &config) {
   }
 
   int _part_rotate_start = static_cast<int>(fs["part_rotate"]["start"]);
-  int _part_rotate_end   = static_cast<int>(fs["part_rotate"]["end"]);
+  int _part_rotate_end = static_cast<int>(fs["part_rotate"]["end"]);
   int _part_rotate_scale = static_cast<int>(fs["part_rotate"]["scale"]);
 
   config.num_part_rotation = _part_rotate_end - _part_rotate_start + 1;
-  config.part_rotation_range.resize(config.num_part_rotation);
+  config.part_rotation_range = new int[config.num_part_rotation];
   for (int i = 0; i < config.num_part_rotation; i++)
-    config.part_rotation_range[i] = (i + _part_rotate_start) * _part_rotate_scale;
-    
+    config.part_rotation_range[i] =
+        (i + _part_rotate_start) * _part_rotate_scale;
+
+  config.location_perturb_fraction =
+      static_cast<double>(fs["location_perturb_fraction"]);
   config.location_shift_limit = static_cast<int>(fs["location_shift_limit"]);
   config.orient_shift_limit = static_cast<int>(fs["orient_shift_limit"]);
-  
-  config.max_part_relative_rotation = 2;
-  config.resolution_shift_limit = 1;
-  config.min_rotation_dif = pow(sin(config.max_part_relative_rotation * PI / config.num_orient) - sin(0), 2) + pow(cos(config.max_part_relative_rotation  * PI / config.num_orient) - cos(0), 2) + 1e-10;
+
+  config.max_part_relative_rotation =
+      static_cast<int>(fs["part_rotate"]["max_relative_rotation"]);
+
+  config.resolution_shift_limit =
+      static_cast<int>(fs["resolution_shift_limit"]);
+  config.min_rotation_dif =
+      pow(sin(config.max_part_relative_rotation * PI / config.num_orient) -
+              sin(0),
+          2) +
+      pow(cos(config.max_part_relative_rotation * PI / config.num_orient) -
+              cos(0),
+          2) +
+      1e-10;
 
   int _rotate_start = static_cast<int>(fs["obj_rotate"]["start"]);
-  int _rotate_end   = static_cast<int>(fs["obj_rotate"]["end"]);
+  int _rotate_end = static_cast<int>(fs["obj_rotate"]["end"]);
   int _rotate_scale = static_cast<int>(fs["obj_rotate"]["scale"]);
   config.num_rotate = _rotate_end - _rotate_start + 1;
-  config.rotation_range.resize(config.num_rotate);
-  
+  config.rotation_range = new int[config.num_rotate];
   for (int i = 0; i < config.num_part_rotation; i++)
     config.rotation_range[i] = (i + _rotate_start) * _rotate_scale;
-
-
-  config.startx = 1; config.starty = 1;
-  config.endx = config.startx + config.template_size[0] - 1;
-  config.endy = config.starty + config.template_size[1] - 1;
   /////////////////////////////////////////////////////////
   // reading from the thrid mat file --- object model
   std::ifstream ifs;
@@ -251,8 +283,8 @@ bool LoadConfigFile(const std::string &filename, SAOTConfig &config) {
   LoadMatCell2("./inference/allSelectedOrient.txt", config.allSelectedOrient);
   LoadMatCell1("./inference/selectedlambda.txt", config.selectedlambda);
   LoadMatCell1("./inference/selectedLogZ.txt", config.selectedLogZ);
-  LoadMatCell1("./inference/allSymbol.txt", config.allSymbol);
-  LoadMatCell1("./inference/allFilter.txt", config.allFilter);
+  //LoadMatCell1("./inference/allSymbol.txt", config.allSymbol);
+  //LoadMatCell1("./inference/allFilter.txt", config.allFilter);
 
   LoadMatCell2("./inference/largerAllSelectedx.txt", config.largerAllSelectedx);
   LoadMatCell2("./inference/largerAllSelectedy.txt", config.largerAllSelectedy);
@@ -284,7 +316,7 @@ bool GetCmdOptions(int argc, char **argv, SAOTConfig &config) {
       po::value<std::string>(&output_dir)->default_value("output"),
       "output directory")(
       "bkg-image-dir,b",
-      po::value<std::string>(&bkg_dir)->default_value("BackgroundImage"),
+      po::value<std::string>(&bkg_dir)->default_value("./inference/negativeImage"),
       "background image directory");
   po::variables_map vm;
   po::store(po::parse_command_line(argc, argv, desc), vm);

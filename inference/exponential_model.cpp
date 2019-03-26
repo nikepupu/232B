@@ -1,17 +1,16 @@
 #include "exponential_model.hpp"
-#include <boost/format.hpp>
-#include <boost/log/trivial.hpp>
-#include <cmath>
-#include <ctime>
 #include "filter.hpp"
 #include "misc.hpp"
 #include "util/file_util.hpp"
 #include "util/meta_type.hpp"
+#include <boost/log/trivial.hpp>
+#include <cmath>
+#include <ctime>
 
 namespace AOG_LIB {
 namespace SAOT {
 
-void ExponentialModel::SetBackgroudnImageDir(const std::string& img_dir) {
+void ExponentialModel::SetBackgroudnImageDir(const std::string &img_dir) {
   img_dir_ = img_dir;
 }
 
@@ -19,12 +18,15 @@ void ExponentialModel::Build() {
   std::vector<std::string> img_list;
   UTIL::GetFileList(img_list, img_dir_, img_ext_, /*fullpath=*/true);
   int num_image = img_list.size();
+  BOOST_LOG_TRIVIAL(debug) << "Start loading background images, size: "
+                           << num_image;
   std::vector<cv::Size> img_size;
   img_size.reserve(num_image);
   MatCell_1<cv::Mat> images = CreateMatCell1Dim<cv::Mat>(num_image);
   int sizex, sizey;
   for (int i = 0; i < num_image; i++) {
     cv::Mat img = cv::imread(img_list[i], cv::IMREAD_GRAYSCALE);
+    img.convertTo(img, CV_64FC1);
     images[i] = img;
     img_size[i] = img.size();
     if (i == 0) {
@@ -41,7 +43,12 @@ void ExponentialModel::Build() {
   // filtering background images
   BOOST_LOG_TRIVIAL(debug) << "Start filtering";
   std::clock_t start_time = std::clock();
+
+  CreateMatCell1Dim<cv::Mat>(all_filter, num_orient_);
+  CreateMatCell1Dim<cv::Mat>(all_symbol, num_orient_);
+
   MakeFilter(scale_filter_, num_orient_, all_filter, all_symbol);
+  BOOST_LOG_TRIVIAL(debug) << "Done making filters";
   // half size of gabor
   int half_filter_size = all_filter[0].rows / 2;
   // ApplyFilterfftSame
@@ -53,6 +60,7 @@ void ExponentialModel::Build() {
   BOOST_LOG_TRIVIAL(debug) << "Start histogramming";
   start_time = std::clock();
   int num_bins = static_cast<int>(floor(saturation_ / bin_size_) + 1);
+
   cv::Mat histog = cv::Mat::zeros(num_bins, 1, CV_64F);
 
   Histogram(filtered_images, config_, cv::Size(sizex, sizey), bin_size_,
@@ -60,7 +68,7 @@ void ExponentialModel::Build() {
   double hist_time = (std::clock() - start_time) / CLOCKS_PER_SEC;
   BOOST_LOG_TRIVIAL(debug) << "histogramming time: " << hist_time << " seconds";
   // compute stored lambda, expectation, logZ
-  stored_param = CreateMatCell1Dim<ExpParam>(num_stored_point_);
+  CreateMatCell1Dim<ExpParam>(stored_param, num_stored_point_);
   cv::Mat r(num_bins, 1, CV_64F);
   for (int i = 0; i < num_bins; i++) {
     r.at<double>(i, 0) = i * bin_size_;
@@ -74,6 +82,7 @@ void ExponentialModel::Build() {
       p.at<double>(i, 0) =
           exp(lambda * r.at<double>(i, 0)) * histog.at<double>(i, 0);
     }
+
     Z = cv::sum(p)[0];
     p = p / Z;
     stored_param[k].storedExpectation =
@@ -83,7 +92,8 @@ void ExponentialModel::Build() {
   }
 
   CorrFilter(all_filter, epsilon_, correlation);
+  BOOST_LOG_TRIVIAL(debug) << "Done processing expoential model"; 
 }
 
-}  // namespace SAOT
-}  // namespace AOG_LIB
+} // namespace SAOT
+} // namespace AOG_LIB

@@ -1,14 +1,16 @@
 #include "template.hpp"
-#include <cmath>
 #include "misc.hpp"
+#include <cmath>
+#include <boost/log/trivial.hpp>
+
 namespace AOG_LIB {
 namespace SAOT {
 
 /* \brief Affine transform of a list of components.
  * A component is a 4D point with its position, orientation and scale (length).
  */
-void TemplateAffineTransform(const std::vector<PartParam>& in_comp,
-                             std::vector<PartParam>& dest_comp, float t_scale,
+void TemplateAffineTransform(const std::vector<PartParam> &in_comp,
+                             std::vector<PartParam> &dest_comp, float t_scale,
                              float r_scale, float c_scale, float rotation,
                              int n_ori) {
   if (dest_comp.size() > 0) {
@@ -46,16 +48,13 @@ void TemplateAffineTransform(const std::vector<PartParam>& in_comp,
   }
 }
 
-Template::Template(const SAOTConfig& config,
-                   const MatCell_1<cv::Mat>& correlation,
-                   const MatCell_2<cv::Mat>& sum1_map_find,
-                   const MatCell_1<cv::Mat>& all_symbol,
-                   const MatCell_1<ExpParam>& exp_model)
-    : config_(config),
-      correlation_(correlation),
-      sum1_map_find_(sum1_map_find),
-      all_symbol_(all_symbol),
-      exp_model_(exp_model) {
+Template::Template(const SAOTConfig &config,
+                   const MatCell_1<cv::Mat> &correlation,
+                   const MatCell_2<cv::Mat> &sum1_map_find,
+                   const MatCell_1<cv::Mat> &all_symbol,
+                   const MatCell_1<ExpParam> &exp_model)
+    : config_(config), correlation_(correlation), sum1_map_find_(sum1_map_find),
+      all_symbol_(all_symbol), exp_model_(exp_model) {
   for (int ind = 0; ind <= config_.template_size[0] - config_.part_size[0];
        ind += config.part_size[0]) {
     part_loc_x0.push_back(ind);
@@ -76,47 +75,50 @@ Template::Template(const SAOTConfig& config,
 
 void Template::Initialize() {
   // Prepare output variables for learning
-  selected_params_ = CreateMatCell1Dim<std::vector<BasisParam> >(num_cand_part);
-  larger_selected_params_ =
-      CreateMatCell1Dim<std::vector<BasisParam> >(num_cand_part);
-  all_selected_params_ = CreateMatCell2Dim<std::vector<BasisParam> >(
-      num_cand_part, config_.num_rotate);
-  larger_all_selected_params_ = CreateMatCell2Dim<std::vector<BasisParam> >(
-      num_cand_part, config_.num_rotate);
+  CreateMatCell1Dim<std::vector<BasisParam> >(selected_params_, num_cand_part);
+  CreateMatCell1Dim<std::vector<BasisParam> >(larger_selected_params_,
+                                             num_cand_part);
+  CreateMatCell2Dim<std::vector<BasisParam> >(all_selected_params_,
+                                             num_cand_part, 
+                                             config_.num_part_rotation);
+  CreateMatCell2Dim<std::vector<BasisParam> >(larger_all_selected_params_,
+                                             num_cand_part, 
+                                             config_.num_part_rotation);
 
-  common_template_ = CreateMatCell1Dim<cv::Mat>(num_cand_part);
+  CreateMatCell1Dim<cv::Mat>(common_template_, num_cand_part);
+
   for (int i = 0; i < num_cand_part; i++) {
     common_template_[i] =
         cv::Mat::zeros(config_.part_size[0], config_.part_size[1], CV_64F);
   }
 
-  deformed_template_ = CreateMatCell1Dim<cv::Mat>(config_.num_image);
+  CreateMatCell1Dim<cv::Mat>(deformed_template_, config_.num_image);
   for (int i = 0; i < config_.num_image; i++) {
     deformed_template_[i] =
         cv::Mat::zeros(config_.part_size[0], config_.part_size[1], CV_64F);
   }
 
   // Initialize learning from the starting image
-  sum1_map_learn0_ = CreateMatCell1Dim<cv::Mat>(config_.num_orient);
+  CreateMatCell2Dim<cv::Mat>(sum1_map_learn0_, 1, config_.num_orient);
   for (int orient = 0; orient < config_.num_orient; orient++) {
-    sum1_map_learn0_[config_.num_orient] = cv::Mat::zeros(
+    sum1_map_learn0_[0][orient] = cv::Mat::zeros(
         config_.template_size[0], config_.template_size[1], CV_64F);
     // Ccopy(dest, src, startx, starty, 0, 0,
     // template_size, img_size, /*theta=*/0)
     // dest[x, y] = src[startx+x, starty+dy]
-    int sizex = sum1_map_find_[config_.original_resolution][orient].rows;
-    int sizey = sum1_map_find_[config_.original_resolution][orient].cols;
+    int sizex = sum1_map_find_[config_.original_resolution-1][orient].rows;
+    int sizey = sum1_map_find_[config_.original_resolution-1][orient].cols;
     int copy_size_x = fmin(sizex, config_.template_size[0]);
     int copy_size_y = fmin(sizey, config_.template_size[1]);
-    sum1_map_learn0_[config_.num_orient]
+    sum1_map_learn0_[0][orient]
         .rowRange(0, copy_size_x)
         .colRange(0, copy_size_y) =
-        sum1_map_find_[config_.original_resolution][orient]
+        sum1_map_find_[config_.original_resolution-1][orient]
             .rowRange(0, copy_size_x)
             .colRange(0, copy_size_y);
   }
 
-  deformed_template0_ = CreateMatCell1Dim<cv::Mat>(1);
+  CreateMatCell1Dim<cv::Mat>(deformed_template0_, 1);
   deformed_template0_[0] =
       cv::Mat::zeros(config_.part_size[0], config_.part_size[1], CV_64F);
 
@@ -124,9 +126,11 @@ void Template::Initialize() {
       CreateMatCell1Dim<BasisParam>(config_.num_element);
   cv::Mat tmp_common_template = cv::Mat::zeros(
       config_.template_size[0], config_.template_size[1], CV_64F);
-  SharedSketch(config_, img_size_, sum1_map_learn0_, correlation_, all_symbol_,
-               tmp_common_template, deformed_template0_, exp_model_,
-               tmp_selected_params);
+      
+  // SharedSketch(config_, cv::Size(config_.template_size[0], 
+  //             config_.template_size[1]), sum1_map_learn0_, correlation_, 
+  //             all_symbol_, tmp_common_template, deformed_template0_, 
+  //             exp_model_, tmp_selected_params);
 
   // split the object template into non-overlapping partial templates
   for (int i_part = 0; i_part < num_cand_part; i_part++) {
@@ -176,26 +180,27 @@ void Template::Initialize() {
   RotateTemplate();
 
   // Init S3 template
-  S3_selected_parts_.reserve(num_cand_part);
-
   for (int i = 0; i < num_cand_part; i++) {
     part_on_off_.push_back(1);
-    S3_selected_parts_[i].row =
+    PartParam param;
+    param.row =
         part_loc[i].x + static_cast<int>(floor(config_.part_size[0] / 2));
-    S3_selected_parts_[i].col =
+    param.col =
         part_loc[i].y + static_cast<int>(floor(config_.part_size[0] / 2));
-    S3_selected_parts_[i].ori = 0;
+    param.ori = 0;
+    S3_selected_parts_.push_back(param);
   }
 
-  all_S3_selected_parts_ =
-      CreateMatCell1Dim<std::vector<PartParam> >(config_.num_rotate);
+  CreateMatCell1Dim<std::vector<PartParam> >(all_S3_selected_parts_,
+                                            config_.num_part_rotation);
 
   for (int i = 0; i < config_.num_rotate; i++) {
+    std::vector<PartParam> params;
     for (int j = 0; j < num_cand_part; j++) {
-      all_S3_selected_parts_[i][j].row = 0;
-      all_S3_selected_parts_[i][j].col = 0;
-      all_S3_selected_parts_[i][j].ori = 0;
+      PartParam param = {0, 0, 0};
+      params.push_back(param);
     }
+    all_S3_selected_parts_[i] = params;
   }
 
   RotateS3Template();
@@ -315,5 +320,5 @@ void Template::RotateS3Template() {
   }
 }
 
-}  // namespace SAOT
-}  // namespace AOG_LIB
+} // namespace SAOT
+} // namespace AOG_LIB

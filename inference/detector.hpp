@@ -86,7 +86,8 @@ namespace SAOT{
 	{
 
 	public:
-		SAOT_Inference();
+		SAOT_Inference(const SAOTConfig &config) : config_(config) {};
+		void StartInference();
 		void TraceBack(SAOTConfig &configs);
 
 	private:
@@ -174,19 +175,15 @@ namespace SAOT{
 	/// this verison of find returns the non zero indices of a vector function
 	template <class type>
 	mat find(std::vector<type> tmp);
-
-	cv::Mat displayMatchedTemplate(std::vector<int> &latticeSize, std::vector<int> &selectedRow, 
-		std::vector<int> &selectedCol, std::vector<int> &selectedO, std::vector<int> &selectedS, 
-		std::vector<int> &selectedMean, MatCell_1<cv::Mat> &allsymbol, int &nGaborOri);
-
-	cv::Mat drawGaborSymbol(cv::Mat im, MatCell_1<cv::Mat> &allsymbol, int row, int col, int orientationIndex, int nGaborOri, 
-			int scaleIndex, double intensity );
+	void LoadImages(std::vector<cv::Mat> &images);
 
 	void Compute();
 
 
 	/////////////
-	SAOTConfig config;
+	SAOTConfig config_;
+
+	std::vector<std::string> img_list_;
 	 
 	std::string modelFolder;
 	std::string configFile;

@@ -1,11 +1,6 @@
 #ifndef SAOT_EXPONENTIAL_MODEL_HPP_
 #define SAOT_EXPONENTIAL_MODEL_HPP_
 
-#ifndef BOOST_LOG_DYN_LINK
-#define BOOST_LOG_DYN_LINK 1
-#endif
-
-
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
 #include <string>
@@ -40,6 +35,8 @@ class ExponentialModel {
   void SetBackgroudnImageDir(const std::string& img_dir);
 
   void Build();
+
+  void SaveModelParams(const std::string& filename);
 
   MatCell_1<cv::Mat> all_filter, all_symbol;
 

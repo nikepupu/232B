@@ -15,9 +15,12 @@ int main(int argc, char ** argv)
 
 	//SAOT_Inference *temp = new SAOT_Inference();
 	//temp->LoadConfig();
-	
-
-	boost::shared_ptr<AOG_LIB::SAOT::SAOT_Inference> stInference = boost::make_shared<AOG_LIB::SAOT::SAOT_Inference>();
+	SAOTConfig config;
+	if (AOG_LIB::SAOT::GetCmdOptions(argc, argv, config))
+	{
+		boost::shared_ptr<AOG_LIB::SAOT::SAOT_Inference> stInference = boost::make_shared<AOG_LIB::SAOT::SAOT_Inference>(config);
+		stInference -> StartInference();
+	}
 	
 
 	return 0;

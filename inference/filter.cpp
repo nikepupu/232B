@@ -1,14 +1,16 @@
 #include "util/meta_type.hpp"
 #include "filter.hpp"
-#include <cmath>
+
 #include "misc.hpp"
 #include "saot_config.hpp"
 
+#include <boost/log/trivial.hpp>
+#include <cmath>
 
 namespace AOG_LIB {
 namespace SAOT {
 
-void GaborFilter(int scale, int orient, cv::Mat &filter, cv::Mat &symbol) {
+void GaborFilter(double scale, int orient, cv::Mat &filter, cv::Mat &symbol) {
   int expand = 12;
   int h = static_cast<int>(floor(scale * expand + 0.5));
   double alpha = M_PI * orient / 180;
@@ -61,10 +63,8 @@ void GaborFilter(int scale, int orient, cv::Mat &filter, cv::Mat &symbol) {
   cv::merge(G, 2, filter);
 }
 
-void MakeFilter(int scale, int num_orient, MatCell_1<cv::Mat> &all_filter,
+void MakeFilter(double scale, int num_orient, MatCell_1<cv::Mat> &all_filter,
                 MatCell_1<cv::Mat> &all_symbol) {
-  all_filter = CreateMatCell1Dim<cv::Mat>(num_orient);
-  all_symbol = CreateMatCell1Dim<cv::Mat>(num_orient);
   for (int o = 0; o < num_orient; o++) {
     int orient = o * 180 / num_orient;
     cv::Mat filter, symbol;
@@ -77,7 +77,7 @@ void MakeFilter(int scale, int num_orient, MatCell_1<cv::Mat> &all_filter,
 void CorrFilter(const MatCell_1<cv::Mat> &filters, double epsilon,
                 MatCell_2<cv::Mat> &inhibit_map) {
   int num_filter = filters.size();
-  inhibit_map = CreateMatCell2Dim<cv::Mat>(num_filter, num_filter);
+  CreateMatCell2Dim<cv::Mat>(inhibit_map, num_filter, num_filter);
   for (int i = 0; i < num_filter; ++i) {
     int hi = filters[i].rows / 2;
     for (int j = 0; j < num_filter; ++j) {
@@ -95,7 +95,8 @@ void CorrFilter(const MatCell_1<cv::Mat> &filters, double epsilon,
       cv::filter2D(I_comp[0], rr, /*ddepth=*/-1, filter_comp[1]);
       cv::filter2D(I_comp[1], rr, /*ddepth=*/-1, filter_comp[1]);
       cv::Mat corr = rr.mul(rr) + ri.mul(ri) + ir.mul(ir) + ii.mul(ii);
-      cv::threshold(corr, corr, epsilon, 1.0, cv::THRESH_BINARY_INV);
+      // cv::threshold(corr, corr, epsilon, 1.0, cv::THRESH_BINARY_INV);
+      corr = (corr < epsilon) * 1.0;
       inhibit_map[i][j] = corr;
     }
   }
@@ -107,7 +108,7 @@ void ApplyFilterfft(const SAOTConfig config, const MatCell_1<cv::Mat> &images,
   int num_images = images.shape()[0];
   int num_filters = filters.shape()[0];
   int h = (filters[0].rows - 1) / 2;
-  //CreateMatCell2Dim<cv::Mat>(filtered_images, num_images, num_filters);
+  CreateMatCell2Dim<cv::Mat>(filtered_images, num_images, num_filters);
   for (int i = 0; i < num_images; i++) {
     double tot = 0.0;
     int sx = images[i].rows, sy = images[i].cols;
@@ -143,6 +144,7 @@ void ApplyFilterfft(const SAOTConfig config, const MatCell_1<cv::Mat> &images,
     for (int j = 0; j < num_filters; j++) {
       filtered_results[j] /= ave;
     }
+    
     LocalNormalize(cv::Size(sx, sy), num_filters, h,
                    cv::Size(config.local_half_x, config.local_half_y),
                    config.threshold_factor, filtered_results);
@@ -150,5 +152,5 @@ void ApplyFilterfft(const SAOTConfig config, const MatCell_1<cv::Mat> &images,
   }
 }
 
-}  // namespace SAOT
-}  // namespace AOG_LIB
+} // namespace SAOT
+} // namespace AOG_LIB

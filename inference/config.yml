@@ -25,6 +25,10 @@ num_stored_point: 50
 # Original resolution is the one at which the imresize factor = 1
 original_resolution: 4
 
+# Start point of bounding box
+startx: 0
+starty: 0
+
 # Morphable active basis model
 num_iteration: 30
 
@@ -49,4 +53,3 @@ orient_shift_limit: 1
 subsample_S2: 3
 subsample_M2: 1
 subsample: 1
-

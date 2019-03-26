@@ -22,16 +22,16 @@ namespace SAOT {
 
     double LocalMaximumPooling(int img, int orient, int x, int y, int *trace, 
     int numShift, cv::Mat &xShift, cv::Mat &yShift, cv::Mat &orientShifted, 
-    MatCell_1<cv::Mat> &SUM1map, int sizex, int sizey, int numImage);
+    MatCell_2<cv::Mat> &SUM1map, int sizex, int sizey, int numImage);
 
     void NonMaximumSuppression(int img, int mo, int mx, int my, const SAOTConfig& config, 
-    MatCell_1<cv::Mat> &SUM1map, cv::Mat &MAX1map, cv::Mat &trackMap, MatCell_1<cv::Mat> &Correlation, 
+    MatCell_2<cv::Mat> &SUM1map, cv::Mat &MAX1map, cv::Mat &trackMap, MatCell_1<cv::Mat> &Correlation, 
     cv::Mat &pooledMax1map, cv::Mat &orientShifted, cv::Mat &xShift, cv::Mat &yShift, 
     int numShift, const cv::Size &img_size);
 
     void Sigmoid(const SAOTConfig& config, MatCell_2<cv::Mat> &map_sum1_find);
 
-    void SharedSketch(const SAOTConfig& config, const cv::Size &img_size, MatCell_1<cv::Mat> &SUM1map, 
+    void SharedSketch(const SAOTConfig& config, const cv::Size &img_size, MatCell_2<cv::Mat> &SUM1map, 
     MatCell_1<cv::Mat> &Correlation, MatCell_1<cv::Mat> &allSymbol, cv::Mat &commonTemplate, 
     MatCell_1<cv::Mat> &deformedTemplate, MatCell_1<ExpParam> &eParam, MatCell_1<BasisParam> &bParam);
 

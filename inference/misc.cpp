@@ -1,6 +1,6 @@
+#include "./util/meta_type.hpp"
 #include "misc.hpp"
 #include "math.h"
-#include "./util/meta_type.hpp"
 #include "saot_config.hpp"
 #include <boost/multi_array.hpp>
 #include <string>
@@ -40,7 +40,7 @@ void DrawElement(cv::Mat &Template, int mo, int mx, int my, double w, int sizex,
 /* local maximum pooling at (x, y, orient) */
 double LocalMaximumPooling(int img, int orient, int x, int y, int *trace, 
 	int numShift, cv::Mat &xShift, cv::Mat &yShift, cv::Mat &orientShifted, 
-	MatCell_1<cv::Mat> &SUM1map, int sizex, int sizey, int numImage) 
+	MatCell_2<cv::Mat> &SUM1map, int sizex, int sizey, int numImage) 
 {
    double maxResponse, r;
    int shift, x1, y1, orient1, mshift; 
@@ -54,8 +54,8 @@ double LocalMaximumPooling(int img, int orient, int x, int y, int *trace,
 	   orient1 = orientShifted.at<int>(orient, shift);
 	   if ((x1>=0)&&(x1<sizex)&&(y1>=0)&&(y1<sizey)) 
 		{            
-		   int idx = orient1*numImage+img;
-		   r = SUM1map[idx].at<double>(x1, y1);
+		   // int idx = orient1*numImage+img;
+		   r = SUM1map[orient1][img].at<double>(x1, y1);
 		   if (r>maxResponse)
 				{
 				   maxResponse = r;   
@@ -69,7 +69,7 @@ double LocalMaximumPooling(int img, int orient, int x, int y, int *trace,
 
 /* the local maximal Gabor inhibits overlapping Gabors */
 void NonMaximumSuppression(int img, int mo, int mx, int my, const SAOTConfig& config, 
-	MatCell_1<cv::Mat> &SUM1map, cv::Mat &MAX1map, cv::Mat &trackMap, MatCell_1<cv::Mat> &Correlation, 
+	MatCell_2<cv::Mat> &SUM1map, cv::Mat &MAX1map, cv::Mat &trackMap, MatCell_1<cv::Mat> &Correlation, 
 	cv::Mat &pooledMax1map, cv::Mat &orientShifted, cv::Mat &xShift, cv::Mat &yShift, 
 	int numShift, int startx, int starty, int endx, int endy, int sizexSubsample, 
 	int sizeySubsample, const cv::Size &img_size) 
@@ -88,7 +88,7 @@ void NonMaximumSuppression(int img, int mo, int mx, int my, const SAOTConfig& co
    /* inhibit on the SUM1 maps */
    for (orient=0; orient<numOrient; orient++)   
 	 {
-	   cv::Mat &f = SUM1map[orient*numImage+img];   
+	   cv::Mat &f = SUM1map[orient][img];   
 	   cv::Mat &fc = Correlation[mo+orient*numOrient];   
 	   for (x=MAX(1, mx-2*halfFilterSize)-1; x<MIN(sizex, mx+2*halfFilterSize); x++)
 		 for (y=MAX(1, my-2*halfFilterSize)-1; y<MIN(sizey, my+2*halfFilterSize); y++)
@@ -167,10 +167,10 @@ void LocalNormalize(const cv::Size &img_size, int num_filters,
 	thresholdFactor = threshold_factor;
 	halfFilterSize = half_filter_size;
 	numOrient = num_filters;
-	sizex = ROUND(img_size.height);
-	sizey = ROUND(img_size.width);
-	localHalfx = ROUND(local_half.height);
-	localHalfy = ROUND(local_half.width);
+	sizex = ROUND(img_size.width);
+	sizey = ROUND(img_size.height);
+	localHalfx = ROUND(local_half.width);
+	localHalfy = ROUND(local_half.height);
 
 	// original global variables
 	cv::Mat SUM1mapAll, integralMap, averageMap; 
@@ -437,7 +437,7 @@ void Instribe(cv::Mat &srcImage, cv::Mat &destImage, int val)
 }
 
 void Histogram(MatCell_2<cv::Mat> &filteredImage, const SAOTConfig& config, const cv::Size &img_size, 
-	double binSize, int numBin, cv::Mat& histog) 
+	double binSize, int numBin, cv::Mat& histog)
 {
 	int sizex, sizey;  
 	int orient, img, b, tot;
@@ -447,16 +447,16 @@ void Histogram(MatCell_2<cv::Mat> &filteredImage, const SAOTConfig& config, cons
 	double saturation = config.saturation;
 	int x,y;
 
-	sizex = ROUND(img_size.height);
-	sizey = ROUND(img_size.width);
+	sizex = ROUND(img_size.width);
+	sizey = ROUND(img_size.height);
 	Sigmoid(config, filteredImage);
 
 	tot = 0; 
 	for (x=halfFilterSize; x<sizex-halfFilterSize; x++)
 	   for (y=halfFilterSize; y<sizey-halfFilterSize; y++)
 	   {
-			for (int r=0; r<numOrient; ++r)
-				for (int c=0; c<numImage; ++c)
+			for (int r=0; r<filteredImage.shape()[0]; ++r)
+				for (int c=0; c<filteredImage.shape()[1]; ++c)
 				{
 					b = MIN(floor(filteredImage[r][c].at<double>(x, y)/binSize), numBin-1); 
 					histog.at<double>(b, 0) += 1.; 
@@ -471,7 +471,7 @@ void Histogram(MatCell_2<cv::Mat> &filteredImage, const SAOTConfig& config, cons
 }
 
 // SharedSketch
-void SharedSketch(const SAOTConfig& config, const cv::Size &img_size, MatCell_1<cv::Mat> &SUM1map, 
+void SharedSketch(const SAOTConfig& config, const cv::Size &img_size, MatCell_2<cv::Mat> &SUM1map, 
 	MatCell_1<cv::Mat> &Correlation, MatCell_1<cv::Mat> &allSymbol, cv::Mat &commonTemplate, 
 	MatCell_1<cv::Mat> &deformedTemplate, MatCell_1<ExpParam> &eParam, MatCell_1<BasisParam> &bParam) 
 {
